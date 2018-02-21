@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/New Piskel.png-899714befd4f536e198397b6100b1202.stex"
+
+[deps]
+
+source_file="res://textures/enemies/New Piskel.png"
+source_md5="a7ada8b8c74fb305865f6238f1efbcbe"
+
+dest_files=[ "res://.import/New Piskel.png-899714befd4f536e198397b6100b1202.stex" ]
+dest_md5="6acb6a4d9122fb9b3d9108c4a72b81b9"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

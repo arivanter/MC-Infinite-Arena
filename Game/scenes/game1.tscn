@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/game1.gd" type="Script" id=1]
+[ext_resource path="res://textures/backgrounds/sand_tile.jpg" type="Texture" id=2]
+[ext_resource path="res://scenes/enemy1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/PauseMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=7]
+
+[node name="Game" type="Node2D" index="0"]
+
+position = Vector2( 1, 0 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
+
+[node name="back" type="Sprite" parent="." index="0"]
+
+position = Vector2( 639.547, 361.569 )
+scale = Vector2( 1.00396, 1.01219 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 720 )
+_sections_unfolded = [ "Region" ]
+
+[node name="enemy1" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 639.14, 221.765 )
+
+[node name="player" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 638.428, 536.739 )
+
+[node name="HUD" parent="player" index="5" instance=ExtResource( 5 )]
+
+[node name="PauseMenu" parent="." index="3" instance=ExtResource( 6 )]
+
+visible = false
+
+[node name="GameOver" parent="." index="4" instance=ExtResource( 7 )]
+
+visible = false
+
+[connection signal="dead" from="player" to="." method="_on_player_dead"]
+
+[connection signal="pause" from="player/HUD" to="." method="_on_HUD_pause"]
+
+

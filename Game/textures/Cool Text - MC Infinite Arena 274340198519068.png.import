@@ -1,0 +1,32 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Cool Text - MC Infinite Arena 274340198519068.png-40dbfbe32bb60df69a9f45a49fcca198.stex"
+
+[deps]
+
+source_file="res://textures/Cool Text - MC Infinite Arena 274340198519068.png"
+source_md5="cf072c827c6d16e5cd6e72f432c832fb"
+
+dest_files=[ "res://.import/Cool Text - MC Infinite Arena 274340198519068.png-40dbfbe32bb60df69a9f45a49fcca198.stex" ]
+dest_md5="9a6d64ca1fd21e7840209ac07cbd75ca"
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

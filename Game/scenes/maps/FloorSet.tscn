@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://textures/environments/Floors.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Grass" type="Sprite" parent="." index="0"]
+
+position = Vector2( 34.7731, 17.9243 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+_sections_unfolded = [ "Animation" ]
+
+[node name="Sand" type="Sprite" parent="." index="1"]
+
+position = Vector2( 84.9612, 17.5658 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+frame = 1
+_sections_unfolded = [ "Animation" ]
+
+[node name="Rock" type="Sprite" parent="." index="2"]
+
+position = Vector2( 137.659, 16.8488 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+frame = 2
+_sections_unfolded = [ "Animation" ]
+
+[node name="Volcanic" type="Sprite" parent="." index="3"]
+
+position = Vector2( 195.016, 18.2828 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+frame = 3
+_sections_unfolded = [ "Animation" ]
+
+[node name="TallGrass" type="Sprite" parent="." index="4"]
+
+position = Vector2( 251.299, 15.4149 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+frame = 4
+_sections_unfolded = [ "Animation" ]
+
+[node name="Ground" type="Sprite" parent="." index="5"]
+
+position = Vector2( 305.072, 14.6979 )
+texture = ExtResource( 1 )
+vframes = 3
+hframes = 2
+frame = 5
+_sections_unfolded = [ "Animation" ]
+
+
