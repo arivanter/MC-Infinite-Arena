@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/maps/TilesetFloors.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/maps/TilesetWalls.tres" type="TileSet" id=3]
+[ext_resource path="res://scenes/maps/TilesetFloors.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/maps/TilesetWalls.tres" type="TileSet" id=2]
 
 [sub_resource type="ParticlesMaterial" id=1]
 
@@ -43,46 +42,16 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Gravity", "Hue Variation", "Scale" ]
 
-[node name="World" type="Node2D" index="0"]
+[node name="World" type="Node2D"]
 
 position = Vector2( 1, 0 )
 
-[node name="player" parent="." index="0" instance=ExtResource( 1 )]
+[node name="Floors" type="TileMap" parent="." index="0"]
 
-position = Vector2( -516.94, 185.01 )
-scale = Vector2( 0.3, 0.3 )
-
-[node name="Camera2D" type="Camera2D" parent="player" index="5"]
-
-anchor_mode = 1
-rotating = false
-current = true
-zoom = Vector2( 0.5, 0.5 )
-limit_left = -10000000
-limit_top = -10000000
-limit_right = 10000000
-limit_bottom = 10000000
-limit_smoothed = false
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = false
-smoothing_speed = 5.0
-offset_v = 0.0
-offset_h = 0.0
-drag_margin_left = 0.0
-drag_margin_top = 0.0
-drag_margin_right = 0.0
-drag_margin_bottom = 0.0
-editor_draw_screen = true
-editor_draw_limits = false
-editor_draw_drag_margin = false
-_sections_unfolded = [ "Drag Margin" ]
-
-[node name="Floors" type="TileMap" parent="." index="1"]
-
+editor/display_folded = true
 z_index = -2
 mode = 0
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -118,10 +87,10 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 color = Color( 0, 0, 0, 1 )
 
-[node name="Walls" type="TileMap" parent="." index="2"]
+[node name="Walls" type="TileMap" parent="." index="1"]
 
 mode = 0
-tile_set = ExtResource( 3 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 16
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
@@ -139,7 +108,7 @@ format = 1
 tile_data = PoolIntArray( -1310695, 0, 0, -1310694, 0, 0, -1245163, 0, 0, -1245162, 0, 0, -1245161, 0, 0, -1245160, 4, 0, -1245158, 0, 0, -1245157, 0, 0, -1179639, 4, 0, -1179638, 0, 0, -1179637, 0, 0, -1179636, 2, 0, -1179635, 2, 0, -1179634, 2, 0, -1179633, 2, 0, -1179632, 2, 0, -1179631, 2, 0, -1179630, 0, 0, -1179629, 0, 0, -1179628, 0, 0, -1179621, 0, 0, -1179620, 0, 0, -1048591, 0, 0, -1048590, 0, 0, -1048589, 0, 0, -1048588, 0, 0, -1048587, 4, 0, -1048586, 0, 0, -1048585, 0, 0, -1048584, 0, 0, -1114108, 4, 0, -1114107, 0, 0, -1114106, 0, 0, -1114105, 0, 0, -1114104, 0, 0, -1114088, 2, 0, -1114084, 0, 0, -1114083, 0, 0, -983057, 0, 0, -983056, 0, 0, -983047, 0, 0, -983046, 2, 0, -983045, 2, 0, -983044, 2, 0, -983043, 2, 0, -983042, 0, 0, -983041, 0, 0, -1048576, 0, 0, -1048575, 0, 0, -1048574, 0, 0, -1048573, 0, 0, -1048547, 2, 0, -917523, 0, 0, -917522, 2, 0, -983010, 0, 0, -851988, 0, 0, -917489, 2, 0, -917474, 0, 0, -786452, 2, 0, -851963, 2, 0, -851938, 0, 0, -720917, 4, 0, -720912, 3, 0, -720903, 3, 0, -786411, 2, 0, -786402, 0, 0, -655382, 0, 0, -720866, 0, 0, -589846, 0, 0, -589838, 0, 0, -589836, 4, 0, -589834, 0, 0, -655330, 0, 0, -524310, 0, 0, -524302, 0, 0, -524298, 0, 0, -589816, 0, 0, -589815, 0, 0, -589814, 0, 0, -589813, 0, 0, -589812, 0, 0, -589811, 0, 0, -589801, 0, 0, -589800, 0, 0, -589799, 0, 0, -589793, 0, 0, -458774, 0, 0, -458766, 0, 0, -458762, 0, 0, -524280, 0, 0, -524263, 0, 0, -524257, 0, 0, -393238, 0, 0, -393230, 2, 0, -393229, 5, 0, -393228, 1, 0, -393227, 5, 0, -393226, 2, 0, -458744, 0, 0, -458727, 0, 0, -458721, 0, 0, -327702, 0, 0, -393212, 0, 0, -393211, 0, 0, -393210, 0, 0, -393209, 0, 0, -393208, 0, 0, -393200, 3, 0, -393199, 3, 0, -393198, 3, 0, -393197, 3, 0, -393191, 0, 0, -393185, 0, 0, -262166, 0, 0, -327672, 0, 0, -327655, 0, 0, -327649, 4, 0, -327648, 0, 0, -196630, 0, 0, -196624, 3, 0, -196617, 3, 0, -262136, 0, 0, -262119, 0, 0, -262112, 0, 0, -131094, 0, 0, -131074, 2, 0, -196600, 0, 0, -196583, 0, 0, -196576, 0, 0, -65558, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -131061, 0, 0, -131060, 0, 0, -131051, 0, 0, -131050, 0, 0, -131049, 0, 0, -131048, 0, 0, -131047, 0, 0, -131040, 0, 0, -22, 3, 0, -65504, 0, 0, 65515, 0, 0, 31, 0, 0, 32, 0, 0, 131051, 0, 0, 65567, 0, 0, 196587, 0, 0, 131102, 0, 0, 131103, 3, 0, 262124, 0, 0, 196612, 2, 0, 196638, 0, 0, 327660, 0, 0, 262173, 0, 0, 393196, 0, 0, 327708, 0, 0, 327709, 0, 0, 458732, 0, 0, 393244, 0, 0, 524268, 0, 0, 458780, 0, 0, 589804, 3, 0, 589819, 3, 0, 589820, 3, 0, 589821, 3, 0, 589822, 3, 0, 589823, 3, 0, 524288, 3, 0, 524304, 2, 0, 524305, 0, 0, 524306, 0, 0, 524307, 0, 0, 524308, 0, 0, 524315, 2, 0, 524316, 0, 0, 655341, 0, 0, 655352, 3, 0, 655353, 3, 0, 655354, 3, 0, 655355, 3, 0, 655356, 3, 0, 589831, 4, 0, 589832, 2, 0, 589844, 0, 0, 589852, 0, 0, 720877, 0, 0, 655366, 2, 0, 655369, 4, 0, 655380, 0, 0, 655388, 0, 0, 786413, 0, 0, 720906, 2, 0, 720912, 0, 0, 720916, 0, 0, 720924, 0, 0, 851949, 0, 0, 786437, 4, 0, 786443, 2, 0, 786448, 0, 0, 786449, 0, 0, 786450, 3, 0, 786451, 0, 0, 786452, 0, 0, 786460, 0, 0, 917486, 0, 0, 851972, 2, 0, 851979, 2, 0, 851996, 0, 0, 983022, 0, 0, 983023, 0, 0, 917509, 2, 0, 917532, 0, 0, 1048559, 2, 0, 983046, 2, 0, 983050, 2, 0, 983067, 0, 0, 983068, 2, 0, 1114096, 0, 0, 1048583, 2, 0, 1048584, 1, 0, 1048585, 2, 0, 1048603, 0, 0, 1179632, 2, 0, 1114132, 3, 0, 1114133, 3, 0, 1114134, 0, 0, 1114139, 0, 0, 1245169, 2, 0, 1179666, 0, 0, 1179667, 0, 0, 1179670, 0, 0, 1179671, 0, 0, 1179672, 0, 0, 1179675, 0, 0, 1310706, 0, 0, 1245184, 0, 0, 1245185, 3, 0, 1245186, 3, 0, 1245187, 3, 0, 1245188, 3, 0, 1245189, 3, 0, 1245202, 0, 0, 1245208, 0, 0, 1245209, 0, 0, 1245211, 0, 0, 1376242, 0, 0, 1376255, 0, 0, 1310720, 0, 0, 1310726, 0, 0, 1310727, 0, 0, 1310738, 0, 0, 1310744, 3, 0, 1310745, 3, 0, 1310747, 0, 0, 1441779, 3, 0, 1441780, 3, 0, 1441781, 3, 0, 1441782, 3, 0, 1441790, 0, 0, 1441791, 0, 0, 1376263, 0, 0, 1376264, 0, 0, 1376273, 0, 0, 1376274, 3, 0, 1376282, 3, 0, 1376283, 3, 0, 1507319, 0, 0, 1507320, 1, 0, 1507321, 0, 0, 1507324, 2, 0, 1507325, 2, 0, 1507326, 2, 0, 1441801, 0, 0, 1441808, 0, 0, 1441809, 0, 0, 1572858, 2, 0, 1572859, 0, 0, 1507337, 0, 0, 1507343, 0, 0, 1572874, 0, 0, 1572875, 0, 0, 1572876, 2, 0, 1572877, 2, 0, 1572878, 2, 0, 1572879, 0, 0 )
 _sections_unfolded = [ "Cell" ]
 
-[node name="Blood" type="Particles2D" parent="." index="3"]
+[node name="Blood" type="Particles2D" parent="." index="2"]
 
 position = Vector2( 235.216, 320.042 )
 emitting = true
@@ -162,7 +131,7 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Material", "Process Material", "Time" ]
 
-[node name="Blood2" type="Particles2D" parent="." index="4"]
+[node name="Blood2" type="Particles2D" parent="." index="3"]
 
 position = Vector2( 247.51, 320.042 )
 emitting = true
@@ -185,7 +154,7 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Material", "Process Material", "Time" ]
 
-[node name="Blood3" type="Particles2D" parent="." index="5"]
+[node name="Blood3" type="Particles2D" parent="." index="4"]
 
 position = Vector2( 297.982, 352.072 )
 emitting = true
@@ -208,7 +177,7 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Material", "Process Material", "Time", "Transform" ]
 
-[node name="Blood4" type="Particles2D" parent="." index="6"]
+[node name="Blood4" type="Particles2D" parent="." index="5"]
 
 position = Vector2( 312.217, 352.719 )
 emitting = true

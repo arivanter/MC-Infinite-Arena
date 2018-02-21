@@ -8,13 +8,12 @@ extends Node2D
 func _ready():
 	$PauseMenu.hide()
 	$GameOver.hide()
-	$enemy1.show()
 
 func _process(delta):
-	$player/HUD/health.value = $player.health
-	$player/HUD/mana.value = $player.mana
+	$World/player/HUD/health.value = $World/player.health
+	$World/player/HUD/mana.value = $World/player.mana
 	if Input.is_action_pressed("ui_pause"):
-		$player/HUD.emit_signal("pause")
+		$World/player/HUD.emit_signal("pause")
 	
 	
 

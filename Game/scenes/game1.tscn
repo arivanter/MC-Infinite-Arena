@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/game1.gd" type="Script" id=1]
-[ext_resource path="res://textures/backgrounds/sand_tile.jpg" type="Texture" id=2]
-[ext_resource path="res://scenes/enemy1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/arena1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/enemy1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/PauseMenu.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=7]
 
@@ -14,35 +14,58 @@ position = Vector2( 1, 0 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
 
-[node name="back" type="Sprite" parent="." index="0"]
+[node name="World" parent="." index="0" instance=ExtResource( 2 )]
 
-position = Vector2( 639.547, 361.569 )
-scale = Vector2( 1.00396, 1.01219 )
-texture = ExtResource( 2 )
-region_enabled = true
-region_rect = Rect2( 0, 0, 1280, 720 )
-_sections_unfolded = [ "Region" ]
+position = Vector2( 90.5254, 280.221 )
+_sections_unfolded = [ "Transform", "Z Index" ]
 
-[node name="enemy1" parent="." index="1" instance=ExtResource( 3 )]
+[node name="player" parent="World" index="6" instance=ExtResource( 3 )]
 
-position = Vector2( 639.14, 221.765 )
+show_behind_parent = true
+position = Vector2( 284.974, 145.371 )
+scale = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
 
-[node name="player" parent="." index="2" instance=ExtResource( 4 )]
+[node name="HUD" parent="World/player" index="5" instance=ExtResource( 4 )]
 
-position = Vector2( 638.428, 536.739 )
+[node name="Camera2D" type="Camera2D" parent="World/player" index="6"]
 
-[node name="HUD" parent="player" index="5" instance=ExtResource( 5 )]
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.5, 0.5 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.05
+drag_margin_top = 0.05
+drag_margin_right = 0.05
+drag_margin_bottom = 0.05
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin" ]
 
-[node name="PauseMenu" parent="." index="3" instance=ExtResource( 6 )]
+[node name="enemy1" parent="World" index="7" instance=ExtResource( 5 )]
+
+position = Vector2( 548.615, -58.4563 )
+scale = Vector2( 0.1, 0.1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PauseMenu" parent="." index="1" instance=ExtResource( 6 )]
 
 visible = false
 
-[node name="GameOver" parent="." index="4" instance=ExtResource( 7 )]
+[node name="GameOver" parent="." index="2" instance=ExtResource( 7 )]
 
 visible = false
-
-[connection signal="dead" from="player" to="." method="_on_player_dead"]
-
-[connection signal="pause" from="player/HUD" to="." method="_on_HUD_pause"]
 
 
