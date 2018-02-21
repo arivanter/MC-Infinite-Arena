@@ -40,6 +40,14 @@ func _physics_process(delta):
 	
 	elif (Input.is_action_pressed("ui_heal")):
 		_change_state(HEAL)
+	
+	elif (Input.is_action_pressed("ui_left")):
+		velocity.x = - WALK_SPEED
+		velocity.y = 0
+		
+	elif (Input.is_action_pressed("ui_right")):
+		velocity.x =   WALK_SPEED
+		velocity.y = 0
 		
 	elif (Input.is_action_pressed("ui_up")):
 		velocity.y = - WALK_SPEED
@@ -49,13 +57,7 @@ func _physics_process(delta):
 		velocity.y =   WALK_SPEED
 		velocity.x = 0
 		
-	elif (Input.is_action_pressed("ui_left")):
-		velocity.x = - WALK_SPEED
-		velocity.y = 0
-		
-	elif (Input.is_action_pressed("ui_right")):
-		velocity.x =   WALK_SPEED
-		velocity.y = 0
+	
 	
 	# reduce vector to 0 to stop moving
 	else:

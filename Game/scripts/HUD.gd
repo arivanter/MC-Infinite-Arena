@@ -22,6 +22,3 @@ func _process(delta):
 		$health.value = parent.health
 		$mana.value = parent.mana
 
-
-func _on_Pause_pressed():
-	emit_signal("pause")
