@@ -6,7 +6,6 @@ extends Node2D
 
 func _ready():
 	$Sure.hide()
-	get_parent().get_node("enemy1").hide()
 
 
 func _process(delta):
@@ -26,14 +25,12 @@ func _on_cotinue_pressed():
 	get_tree().paused = false
 	hide()
 	get_parent().get_node("player/HUD/pause").show()
-	get_parent().get_node("enemy1").show()
 
 
 func _on_pause_pressed():
 	get_tree().paused = false
 	hide()
 	get_parent().get_node("player/HUD/pause").show()
-	get_parent().get_node("enemy1").show()
 
 
 func _on_yes_pressed():
