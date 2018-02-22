@@ -6,23 +6,16 @@ extends Node2D
 
 
 func _ready():
-	$PauseMenu.hide()
-	$GameOver.hide()
+	$AnimationPlayer.play("fadein")
+	$player/PauseMenu.hide()
+	$player/GameOver.hide()
 
 func _process(delta):
-	$World/player/HUD/health.value = $World/player.health
-	$World/player/HUD/mana.value = $World/player.mana
 	if Input.is_action_pressed("ui_pause"):
-		$World/player/HUD.emit_signal("pause")
+		$player/PauseMenu.show()
+		get_tree().paused = true
 	
 	
-
-func _on_HUD_pause():
-	$PauseMenu.show()
-	$enemy1.hide()
-	get_tree().paused = true
-	
-
 
 func _on_player_dead():
-	$GameOver.show()
+	$player/GameOver.show()

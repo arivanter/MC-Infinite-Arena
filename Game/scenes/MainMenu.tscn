@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://textures/backgrounds/how-to-draw-the-colosseum_1_000000006068_5.jpg" type="Texture" id=2]
@@ -21,10 +21,49 @@ use_filter = false
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="MainMenu" type="Node2D" index="0"]
+[sub_resource type="Animation" id=3]
+
+resource_name = "fadein"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "fadeout"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="MainMenu" type="Node2D"]
 
 position = Vector2( 1, 0 )
 script = ExtResource( 1 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="Background" type="Sprite" parent="." index="0"]
 
@@ -89,6 +128,17 @@ _sections_unfolded = [ "custom_fonts" ]
 position = Vector2( 632.567, 124.053 )
 scale = Vector2( 1.05306, 1.32282 )
 texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/fadein = SubResource( 3 )
+anims/fadeout = SubResource( 4 )
+blend_times = [  ]
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 

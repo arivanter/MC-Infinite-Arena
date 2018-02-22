@@ -3,8 +3,7 @@ extends Node2D
 var topscore = 100
 
 func _ready():
-	#$Loading.hide()
-	pass
+	$AnimationPlayer.play("fadein")
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -13,7 +12,14 @@ func _ready():
 
 
 func _on_PlayButton_pressed():
-	#$Loading.show()
+	$AnimationPlayer.play("fadeout")
+	var t = Timer.new()
+	t.set_wait_time(1)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
 	get_tree().change_scene("res://scenes/game1.tscn")
 
 

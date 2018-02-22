@@ -5,8 +5,6 @@ extends Node2D
 # var b = "textvar"
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 
 #func _process(delta):
@@ -16,8 +14,24 @@ func _ready():
 
 
 func _on_Button_pressed():
+	$AnimationPlayer.play('fadeout')
+	var t = Timer.new()
+	t.set_wait_time(2)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
 	get_tree().change_scene("res://scenes/game1.tscn")
 
 
 func _on_Button2_pressed():
+	$AnimationPlayer.play('fadeout')
+	var t = Timer.new()
+	t.set_wait_time(2)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
 	get_tree().change_scene("res://scenes/MainMenu.tscn")

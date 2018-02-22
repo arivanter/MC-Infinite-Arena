@@ -24,13 +24,11 @@ func _on_exit_pressed():
 func _on_cotinue_pressed():
 	get_tree().paused = false
 	hide()
-	get_parent().get_node("player/HUD/pause").show()
 
 
 func _on_pause_pressed():
 	get_tree().paused = false
 	hide()
-	get_parent().get_node("player/HUD/pause").show()
 
 
 func _on_yes_pressed():

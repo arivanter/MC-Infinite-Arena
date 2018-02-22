@@ -6,7 +6,6 @@ extends CanvasLayer
 
 var parent 
 
-signal pause
 
 func _ready():
 	parent = get_parent()
