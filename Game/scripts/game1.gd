@@ -19,3 +19,8 @@ func _process(delta):
 
 func _on_player_dead():
 	$player/GameOver.show()
+	
+	
+func _input(event):
+	if event.is_action_pressed("ui_focus_next"):
+		$player/EndWave.show()
