@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/spells/Fire.gd" type="Script" id=1]
+[ext_resource path="res://materials/prasma_ball_material.tres" type="Material" id=2]
+[ext_resource path="res://particles/fire_particle.png" type="Texture" id=3]
+[ext_resource path="res://textures/environments/plasma_ball.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 4.17645
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 10.2859
+
+[node name="Fire1" type="RigidBody2D"]
+
+rotation = 3.79547e-10
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="particles" type="Particles2D" parent="." index="1"]
+
+rotation = -1.5708
+scale = Vector2( 0.975302, 0.966907 )
+emitting = true
+amount = 30
+lifetime = 0.25
+one_shot = false
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = false
+draw_order = 0
+process_material = ExtResource( 2 )
+texture = ExtResource( 3 )
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Drawing", "Process Material", "Textures", "Time", "Transform" ]
+
+[node name="Area2D" type="Area2D" parent="particles" index="0"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="particles/Area2D" index="0"]
+
+position = Vector2( -3.88258, -0.923759 )
+scale = Vector2( 1.04711, 1.0413 )
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="particles" index="1"]
+
+show_behind_parent = true
+position = Vector2( -2.76709, 0.132874 )
+scale = Vector2( 1.75, 1.75 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
+
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+
+

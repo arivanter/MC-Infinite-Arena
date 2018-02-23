@@ -10,12 +10,14 @@ signal dead
 export var WALK_SPEED = 300
 onready var anim = $Sprite/AnimationPlayer
 
-enum STATES {WALK, ATTACK, HEAL, DIE}
+enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC}
 var current_state = null
 var previous_state = null
 var aux_anim_name = ""
 
-
+var spell_scene = load("res://scenes/spells/Fire1.tscn")
+var spell = spell_scene.instance()
+var attack_spell
 
 func _ready():
 	health = max_health
@@ -37,6 +39,9 @@ func _physics_process(delta):
 	# process input, checked by priority
 	if (Input.is_action_pressed("ui_sword")):
 		_change_state(ATTACK)
+		
+	elif (Input.is_action_pressed("ui_magic")):
+		_change_state(MAGIC)
 	
 	elif (Input.is_action_pressed("ui_heal")):
 		_change_state(HEAL)
@@ -90,6 +95,8 @@ func _change_state(new_state):
 			aux_anim_name = anim.current_animation # for animation selection
 		ATTACK:
 			attack()
+		MAGIC:
+			magic_spell()
 		HEAL:
 			heal()
 		DIE:
@@ -144,6 +151,36 @@ func attack():
 
 
 
+func set_attack_spell():
+	attack_spell = "Fire1"
+	pass
+
+
+
+func magic_spell():
+	
+	if can_momve:
+		if aux_anim_name == "walk_back" and anim.current_animation != "atk_back":
+			spell.apply_impulse(Vector2 (0,0), Vector2 (0,-100))
+			anim.play("atk_back")
+				
+		elif aux_anim_name == "walk_front" and anim.current_animation != "atk_front":
+			spell.apply_impulse(Vector2 (0,0), Vector2 (0,100))
+			anim.play("atk_front")
+				
+		elif aux_anim_name == "walk_left" and anim.current_animation != "atk_left":
+			spell.apply_impulse(Vector2 (0,0), Vector2 (-100,0))
+			anim.play("atk_left")
+				
+		elif aux_anim_name == "walk_right" and anim.current_animation != "atk_right":
+			spell.apply_impulse(Vector2 (0,0), Vector2 (100,0))
+			anim.play("atk_right")
+		add_child(spell)
+		spell = spell_scene.instance()
+		
+
+
+
 func heal():
 	if can_momve:
 		if mana > 0 and health < max_health:
@@ -191,16 +228,16 @@ func die():
 ########### PLACEHOLDER FOR DAMAGE PLAYER ###########
 #####################################################
 #####################################################
-func _on_Area2D_area_entered( area ):
-	damage(area)
-	if health <= 0:
-		_change_state(DIE)
-		
-
-
-func damage(area):
-	if area != $Attack_area:
-		health -= 25
+#func _on_Area2D_area_entered( area ):
+#	damage(area)
+#	if health <= 0:
+#		_change_state(DIE)
+#
+#
+#
+#func damage(area):
+#	if area != $Attack_area:
+#		health -= 25
 #####################################################
 #####################################################
 #####################################################
