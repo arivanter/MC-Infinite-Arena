@@ -9,6 +9,7 @@ signal dead
 
 export var WALK_SPEED = 300
 onready var anim = $Sprite/AnimationPlayer
+onready var attack_area = $Attack_area/CollisionShape2D
 
 enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC}
 var current_state = null
@@ -25,6 +26,7 @@ func _ready():
 	can_momve = true
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
+	$Attack_area/CollisionShape2D.disabled = true
 	
 	# set initial idle position
 	anim.current_animation = "walk_front"
@@ -37,10 +39,10 @@ func _physics_process(delta):
 	var velocity = Vector2()
 	
 	# process input, checked by priority
-	if (Input.is_action_pressed("ui_sword")):
+	if (Input.is_action_just_pressed("ui_sword")):
 		_change_state(ATTACK)
 		
-	elif (Input.is_action_pressed("ui_magic")):
+	elif (Input.is_action_just_pressed("ui_magic")):
 		_change_state(MAGIC)
 	
 	elif (Input.is_action_pressed("ui_heal")):
@@ -92,8 +94,10 @@ func _change_state(new_state):
 	# initialize/enter the state
 	match new_state:
 		WALK:
+			attack_area.disabled = true
 			aux_anim_name = anim.current_animation # for animation selection
 		ATTACK:
+			attack_area.disabled = false
 			attack()
 		MAGIC:
 			magic_spell()
@@ -159,23 +163,26 @@ func set_attack_spell():
 
 func magic_spell():
 	
-	if can_momve:
-		if aux_anim_name == "walk_back" and anim.current_animation != "atk_back":
-			spell.apply_impulse(Vector2 (0,0), Vector2 (0,-100))
+	if can_momve and mana > 0:
+		if aux_anim_name == "walk_back":
+			spell.direction = Vector2 (0,-1)
 			anim.play("atk_back")
-				
-		elif aux_anim_name == "walk_front" and anim.current_animation != "atk_front":
-			spell.apply_impulse(Vector2 (0,0), Vector2 (0,100))
+
+		elif aux_anim_name == "walk_front":
+			spell.direction = Vector2 (0,1)
 			anim.play("atk_front")
-				
-		elif aux_anim_name == "walk_left" and anim.current_animation != "atk_left":
-			spell.apply_impulse(Vector2 (0,0), Vector2 (-100,0))
+
+		elif aux_anim_name == "walk_left":
+			spell.direction = Vector2 (-1,0)
 			anim.play("atk_left")
-				
-		elif aux_anim_name == "walk_right" and anim.current_animation != "atk_right":
-			spell.apply_impulse(Vector2 (0,0), Vector2 (100,0))
+
+		elif aux_anim_name == "walk_right":
+			spell.direction = Vector2 (1,0)
 			anim.play("atk_right")
+		
+		mana -= spell.cost
 		add_child(spell)
+		
 		spell = spell_scene.instance()
 		
 

@@ -15,37 +15,23 @@ radius = 4.17645
 custom_solver_bias = 0.0
 radius = 10.2859
 
-[node name="Fire1" type="RigidBody2D"]
+[node name="Fire1" type="Area2D"]
 
 rotation = 3.79547e-10
 input_pickable = false
-collision_layer = 1
-collision_mask = 1
-mode = 0
-mass = 1.0
-friction = 1.0
-bounce = 0.0
-gravity_scale = 0.0
-custom_integrator = false
-continuous_cd = 0
-contacts_reported = 0
-contact_monitor = false
-sleeping = false
-can_sleep = true
-linear_velocity = Vector2( 0, 0 )
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
 linear_damp = -1.0
-angular_velocity = 0.0
 angular_damp = -1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 
 shape = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="particles" type="Particles2D" parent="." index="1"]
 

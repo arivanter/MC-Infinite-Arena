@@ -554,7 +554,7 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Emission Shape", "Initial Velocity", "Scale" ]
 
-[node name="player" type="KinematicBody2D" index="0"]
+[node name="player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -566,7 +566,6 @@ WALK_SPEED = 500
 
 [node name="Attack_area" type="Area2D" parent="." index="0"]
 
-editor/display_folded = true
 scale = Vector2( 0.2, 0.2 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
