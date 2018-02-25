@@ -9,13 +9,16 @@ signal dead
 
 export var WALK_SPEED = 300
 onready var anim = $Sprite/AnimationPlayer
+onready var attack_area = $Attack_area/CollisionShape2D
 
-enum STATES {WALK, ATTACK, HEAL, DIE}
+enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC}
 var current_state = null
 var previous_state = null
 var aux_anim_name = ""
 
-
+var spell_scene = load("res://scenes/spells/Fire1.tscn")
+var spell = spell_scene.instance()
+var attack_spell
 
 func _ready():
 	health = max_health
@@ -23,6 +26,7 @@ func _ready():
 	can_momve = true
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
+	$Attack_area/CollisionShape2D.disabled = true
 	
 	# set initial idle position
 	anim.current_animation = "walk_front"
@@ -35,8 +39,11 @@ func _physics_process(delta):
 	var velocity = Vector2()
 	
 	# process input, checked by priority
-	if (Input.is_action_pressed("ui_sword")):
+	if (Input.is_action_just_pressed("ui_sword")):
 		_change_state(ATTACK)
+		
+	elif (Input.is_action_just_pressed("ui_magic")):
+		_change_state(MAGIC)
 	
 	elif (Input.is_action_pressed("ui_heal")):
 		_change_state(HEAL)
@@ -87,9 +94,13 @@ func _change_state(new_state):
 	# initialize/enter the state
 	match new_state:
 		WALK:
+			attack_area.disabled = true
 			aux_anim_name = anim.current_animation # for animation selection
 		ATTACK:
+			attack_area.disabled = false
 			attack()
+		MAGIC:
+			magic_spell()
 		HEAL:
 			heal()
 		DIE:
@@ -144,27 +155,61 @@ func attack():
 
 
 
+func set_attack_spell():
+	attack_spell = "Fire1"
+	pass
+
+
+
+func magic_spell():
+	
+	if can_momve and mana > 0:
+		if aux_anim_name == "walk_back":
+			spell.direction = Vector2 (0,-1)
+			anim.play("atk_back")
+
+		elif aux_anim_name == "walk_front":
+			spell.direction = Vector2 (0,1)
+			anim.play("atk_front")
+
+		elif aux_anim_name == "walk_left":
+			spell.direction = Vector2 (-1,0)
+			anim.play("atk_left")
+
+		elif aux_anim_name == "walk_right":
+			spell.direction = Vector2 (1,0)
+			anim.play("atk_right")
+		
+		mana -= spell.cost
+		add_child(spell)
+		
+		spell = spell_scene.instance()
+		
+
+
+
 func heal():
-	if can_momve:
-		if mana > 0 and health < max_health:
-			$HealthParticles.emitting = true
-			if anim.current_animation != "heal":
-				anim.play("heal")
-				
-			# heal speed and ratio
-			health += .1
-			mana -= .2
-		else:
-			$HealthParticles.emitting = false
-			anim.current_animation = "walk_front"
-			anim.seek(0.0, true)
-			current_state = WALK
+	if mana > 0 and health < max_health:
+		$HealthParticles.emitting = true
+		can_momve = false
+		if anim.current_animation != "heal":
+			anim.play("heal")
+			
+		# heal speed and ratio
+		health += .1
+		mana -= .2
+	else:
+		$HealthParticles.emitting = false
+		anim.current_animation = "walk_front"
+		anim.seek(0.0, true)
+		current_state = WALK
 		
 
 
 func _input(event):
 	if event.is_action_released("ui_heal"):
 		$HealthParticles.emitting = false
+		can_momve = true
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)
 		current_state = WALK
@@ -186,21 +231,28 @@ func die():
 
 
 
+
+
+func hit(amount):
+	health -= amount
+	if health <= 0:
+		_change_state(DIE)
+
 #####################################################
 #####################################################
 ########### PLACEHOLDER FOR DAMAGE PLAYER ###########
 #####################################################
 #####################################################
-func _on_Area2D_area_entered( area ):
-	damage(area)
-	if health <= 0:
-		_change_state(DIE)
-		
-
-
-func damage(area):
-	if area != $Attack_area:
-		health -= 25
+#func _on_Area2D_area_entered( area ):
+#	damage(area)
+#	if health <= 0:
+#		_change_state(DIE)
+#
+#
+#
+#func damage(area):
+#	if area != $Attack_area:
+#		health -= 25
 #####################################################
 #####################################################
 #####################################################

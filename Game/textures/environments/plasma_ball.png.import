@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/fire_particle.png-1e47e5c4a203aa10a6f9314c9bedfbd5.stex"
+path="res://.import/plasma_ball.png-6f2548c46a44560c59879194c0361845.stex"
 
 [deps]
 
-source_file="res://particles/fire_particle.png"
-source_md5="d8d7646eadf127ed49697e1897e16cab"
+source_file="res://textures/environments/plasma_ball.png"
+source_md5="411434c30160019bd8e494dc6451f50d"
 
-dest_files=[ "res://.import/fire_particle.png-1e47e5c4a203aa10a6f9314c9bedfbd5.stex" ]
-dest_md5="2504bff379ba03bc6a75ad757653d837"
+dest_files=[ "res://.import/plasma_ball.png-6f2548c46a44560c59879194c0361845.stex" ]
+dest_md5="a7194e4bc53288b8f7da1a9d548d44c4"
 
 [params]
 
