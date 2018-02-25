@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://textures/knight/knight_walking.png" type="Texture" id=2]
@@ -23,12 +23,6 @@ extents = Vector2( 489.5, 489.534 )
 custom_solver_bias = 0.0
 radius = 208.256
 height = 249.602
-
-[sub_resource type="CapsuleShape2D" id=3]
-
-custom_solver_bias = 0.0
-radius = 208.35
-height = 247.846
 
 [sub_resource type="Animation" id=4]
 
@@ -586,20 +580,6 @@ scale = Vector2( 0.2, 0.2 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Damage_area" type="Area2D" parent="CollisionShape2D" index="0"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/Damage_area" index="0"]
-
-shape = SubResource( 3 )
-
 [node name="Sprite" type="Sprite" parent="." index="2"]
 
 scale = Vector2( 0.2, 0.2 )
@@ -676,7 +656,5 @@ normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Material", "Textures", "Transform" ]
-
-[connection signal="area_entered" from="CollisionShape2D/Damage_area" to="." method="_on_Area2D_area_entered"]
 
 

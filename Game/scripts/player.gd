@@ -189,26 +189,27 @@ func magic_spell():
 
 
 func heal():
-	if can_momve:
-		if mana > 0 and health < max_health:
-			$HealthParticles.emitting = true
-			if anim.current_animation != "heal":
-				anim.play("heal")
-				
-			# heal speed and ratio
-			health += .1
-			mana -= .2
-		else:
-			$HealthParticles.emitting = false
-			anim.current_animation = "walk_front"
-			anim.seek(0.0, true)
-			current_state = WALK
+	if mana > 0 and health < max_health:
+		$HealthParticles.emitting = true
+		can_momve = false
+		if anim.current_animation != "heal":
+			anim.play("heal")
+			
+		# heal speed and ratio
+		health += .1
+		mana -= .2
+	else:
+		$HealthParticles.emitting = false
+		anim.current_animation = "walk_front"
+		anim.seek(0.0, true)
+		current_state = WALK
 		
 
 
 func _input(event):
 	if event.is_action_released("ui_heal"):
 		$HealthParticles.emitting = false
+		can_momve = true
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)
 		current_state = WALK
@@ -229,6 +230,13 @@ func die():
 	emit_signal("dead")
 
 
+
+
+
+func hit(amount):
+	health -= amount
+	if health <= 0:
+		_change_state(DIE)
 
 #####################################################
 #####################################################
