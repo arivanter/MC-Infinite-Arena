@@ -22,7 +22,7 @@ var previous_state = null
 
 
 func _ready():
-	randomize()
+	
 	_change_state(WALK)
 	can_move = true
 	health *= multiplier
