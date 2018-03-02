@@ -27,7 +27,8 @@ func _on_Fire1_body_entered( body ):
 	if body == get_parent():
 		yield()
 	set_process(false)
-	emit_signal("hit")
+	if body is KinematicBody:
+		body.hit(power)
 	$particles/Sprite.hide()
 	$particles.emitting = false
 	$explode.emitting = true

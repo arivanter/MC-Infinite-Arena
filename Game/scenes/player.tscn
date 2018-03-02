@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://textures/knight/knight_walking.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://textures/knight/knight_walking_left.png" type="Texture" id=10]
 [ext_resource path="res://textures/knight/knight_walking_right.png" type="Texture" id=11]
 [ext_resource path="res://particles/sharp_cut.png" type="Texture" id=12]
+[ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -24,7 +25,7 @@ custom_solver_bias = 0.0
 radius = 208.256
 height = 249.602
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 length = 0.2
 loop = false
@@ -66,7 +67,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 length = 0.2
 loop = false
@@ -108,7 +109,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 
 length = 0.2
 loop = false
@@ -150,7 +151,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 
 length = 0.2
 loop = false
@@ -192,7 +193,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 
 length = 1.0
 loop = false
@@ -234,7 +235,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 
 length = 0.5
 loop = false
@@ -276,7 +277,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=9]
 
 length = 0.5
 loop = false
@@ -318,7 +319,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=10]
 
 length = 0.5
 loop = false
@@ -360,7 +361,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 
 length = 0.5
 loop = false
@@ -402,7 +403,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 
 length = 0.5
 loop = false
@@ -444,7 +445,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="ParticlesMaterial" id=14]
+[sub_resource type="ParticlesMaterial" id=13]
 
 render_priority = 0
 trail_divisor = 1
@@ -483,31 +484,31 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Spread" ]
 
-[sub_resource type="Gradient" id=15]
+[sub_resource type="Gradient" id=14]
 
 offsets = PoolRealArray( 0, 0.402367, 0.95858 )
 colors = PoolColorArray( 0, 0.87451, 0.333333, 1, 0.638733, 0.875, 0.60498, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture" id=16]
+[sub_resource type="GradientTexture" id=15]
 
 flags = 4
-gradient = SubResource( 15 )
+gradient = SubResource( 14 )
 width = 2048
 
-[sub_resource type="Curve" id=17]
+[sub_resource type="Curve" id=16]
 
 min_value = 0.0
 max_value = 1.0
 bake_resolution = 100
 _data = [ Vector2( 0, 0.886719 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.285156 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=18]
+[sub_resource type="CurveTexture" id=17]
 
 flags = 4
 width = 2048
-curve = SubResource( 17 )
+curve = SubResource( 16 )
 
-[sub_resource type="ParticlesMaterial" id=19]
+[sub_resource type="ParticlesMaterial" id=18]
 
 render_priority = 0
 trail_divisor = 1
@@ -537,8 +538,8 @@ angle = 0.0
 angle_random = 0.0
 scale = 15.0
 scale_random = 0.0
-scale_curve = SubResource( 18 )
-color_ramp = SubResource( 16 )
+scale_curve = SubResource( 17 )
+color_ramp = SubResource( 15 )
 hue_variation = 0.0
 hue_variation_random = 0.0
 anim_speed = 0.0
@@ -556,7 +557,6 @@ collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-WALK_SPEED = 500
 
 [node name="Attack_area" type="Area2D" parent="." index="0"]
 
@@ -596,16 +596,16 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/atk_back = SubResource( 4 )
-anims/atk_front = SubResource( 5 )
-anims/atk_left = SubResource( 6 )
-anims/atk_right = SubResource( 7 )
-anims/die = SubResource( 8 )
-anims/heal = SubResource( 9 )
-anims/walk_back = SubResource( 10 )
-anims/walk_front = SubResource( 11 )
-anims/walk_left = SubResource( 12 )
-anims/walk_right = SubResource( 13 )
+anims/atk_back = SubResource( 3 )
+anims/atk_front = SubResource( 4 )
+anims/atk_left = SubResource( 5 )
+anims/atk_right = SubResource( 6 )
+anims/die = SubResource( 7 )
+anims/heal = SubResource( 8 )
+anims/walk_back = SubResource( 9 )
+anims/walk_front = SubResource( 10 )
+anims/walk_left = SubResource( 11 )
+anims/walk_right = SubResource( 12 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
@@ -626,7 +626,7 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = SubResource( 14 )
+process_material = SubResource( 13 )
 texture = ExtResource( 12 )
 normal_map = null
 h_frames = 1
@@ -650,11 +650,41 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = true
 draw_order = 0
-process_material = SubResource( 19 )
+process_material = SubResource( 18 )
 texture = null
 normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Material", "Textures", "Transform" ]
+
+[node name="HUD" parent="." index="5" instance=ExtResource( 13 )]
+
+[node name="Camera2D" type="Camera2D" parent="." index="6"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.05
+drag_margin_top = 0.05
+drag_margin_right = 0.05
+drag_margin_bottom = 0.05
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin" ]
+
+[connection signal="body_entered" from="Attack_area" to="." method="_on_Attack_area_body_entered"]
 
 
