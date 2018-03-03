@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/enemy1.gd" type="Script" id=1]
 [ext_resource path="res://textures/enemies/New Piskel.png" type="Texture" id=2]
@@ -11,7 +11,12 @@ extents = Vector2( 354.125, 419.145 )
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 469.649, 535.066 )
+extents = Vector2( 453.081, 501.151 )
+
+[sub_resource type="CircleShape2D" id=3]
+
+custom_solver_bias = 0.0
+radius = 1939.66
 
 [node name="enemy1" type="KinematicBody2D"]
 
@@ -28,7 +33,7 @@ position = Vector2( 0, 60 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="1"]
+[node name="AttackArea" type="Area2D" parent="." index="1"]
 
 position = Vector2( 0, 80 )
 input_pickable = true
@@ -40,7 +45,7 @@ audio_bus_override = false
 audio_bus_name = "Master"
 _sections_unfolded = [ "Transform" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0"]
 
 position = Vector2( 0, -20 )
 shape = SubResource( 2 )
@@ -49,6 +54,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="Sprite" type="Sprite" parent="." index="2"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="Camera2D" type="Camera2D" parent="." index="3"]
 
@@ -74,5 +80,28 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+
+[node name="TraceArea" type="Area2D" parent="." index="4"]
+
+position = Vector2( 0, 80 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TraceArea" index="0"]
+
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
+
+[connection signal="body_exited" from="AttackArea" to="." method="_on_AttackArea_body_exited"]
+
+[connection signal="body_entered" from="TraceArea" to="." method="_on_TraceArea_body_entered"]
+
+[connection signal="body_exited" from="TraceArea" to="." method="_on_TraceArea_body_exited"]
 
 

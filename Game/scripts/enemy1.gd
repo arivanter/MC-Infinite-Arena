@@ -2,20 +2,23 @@ extends KinematicBody2D
 
 # enemy parameters 
 
-#onready var player = get_parent().get_node("player")
+onready var player = get_parent().get_node("player")
 var multiplier = 1
 var power = 25
 var health = 100
+var atk_timer = null
 var can_move
 var move_dir_rand
-var WALK_SPEED = 300
+var WALK_SPEED = 225
 var velocity = Vector2()
 var timer = null
-var walk_delay = 1
+var walk_delay = 2
+var following_player = false
+signal dead
 
 # state machine variables
 
-enum STATES {IDLE, WALK, ATTACK, DIE, MAGIC}
+enum STATES {WALK, ATTACK, DIE}
 var current_state = null
 var previous_state = null
 
@@ -33,17 +36,28 @@ func _ready():
 	timer.wait_time = walk_delay
 	timer.connect("timeout", self, "on_timer_complete")
 	add_child(timer)
+	
+	atk_timer = Timer.new()
+	atk_timer.set_one_shot(true)
+	atk_timer.wait_time = 1.5
+	atk_timer.connect("timeout", self, "attack")
+	add_child(atk_timer)
+	
 	select_random_dir()
 
 
 
-func _process(delta):
+func _physics_process(delta):
 	
+	if following_player:
+		velocity = player.position - position
+		velocity = velocity.normalized() * WALK_SPEED
 	if can_move:
-		if velocity != Vector2(0,0):
-			_change_state(WALK)
+		move_and_slide(velocity, Vector2(0,0))
 	if timer.is_stopped():
 		timer.start()
+	if current_state == ATTACK and atk_timer.is_stopped():
+		atk_timer.start()
 			
 			
 		# reset step to idle after finishing walk
@@ -66,12 +80,10 @@ func _change_state(new_state):
 		WALK:
 #			movement_animation(velocity)
 #			aux_anim_name = anim.current_animation # for animation selection (attack and magic)
-			move_and_slide(velocity, Vector2(0,0))
+			pass
 			
 		ATTACK:
-			attack()
-		MAGIC:
-			magic_spell()
+			atk_timer.start()
 		DIE:
 			die()
 	
@@ -81,12 +93,13 @@ func _change_state(new_state):
 #### movement ####
 
 func on_timer_complete():
-	select_random_dir()
+	if not following_player:
+		select_random_dir()
 
 
 
 func select_random_dir():
-	move_dir_rand = randi()%4+1
+	move_dir_rand = randi()%5
 	if move_dir_rand == 1:
 		velocity.x = - WALK_SPEED
 		velocity.y = 0
@@ -102,6 +115,8 @@ func select_random_dir():
 	elif move_dir_rand == 4:
 		velocity.y =   WALK_SPEED
 		velocity.x = 0
+	else:
+		velocity = Vector2(0,0)
 
 
 
@@ -109,26 +124,43 @@ func select_random_dir():
 #### attack ####
 
 func attack():
-	pass
+	player.hit(power)
 	
 	
 	
-#func _on_Area2D_body_entered( body ):
-#	if body == player:
-#		player.hit(power)
+func _on_TraceArea_body_entered(body):
+	if body == player:
+		following_player = true
+
+
+
+func _on_TraceArea_body_exited(body):
+	if body == player:
+		following_player = false
 		
 		
-		
-# magic
-func magic_spell():
-	pass
 	
+func _on_AttackArea_body_entered( body ):
+	if body == player:
+		_change_state(ATTACK)
+
+func _on_AttackArea_body_exited( body ):
+	_change_state(WALK)
 	
 	
 ###########################
 #### health management ####
 
 func hit(damage):
+	$Sprite.self_modulate = Color(225,225,225)
+	var t = Timer.new()
+	t.set_wait_time(.2)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
+	$Sprite.self_modulate = Color(1,1,1)
 	health -= damage
 	if health <= 0:
 		_change_state(DIE)
@@ -147,7 +179,11 @@ func die():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
+	queue_free()
 	emit_signal("dead")
+
+
+
 
 
 

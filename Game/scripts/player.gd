@@ -39,6 +39,7 @@ func _ready():
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
 	$Attack_area/CollisionShape2D.disabled = true
+	spell.connect("hit",self,"_on_spell_hit")
 	
 	# set initial idle position
 	anim.current_animation = "walk_front"
@@ -157,8 +158,9 @@ func attack():
 		
 		
 func _on_Attack_area_body_entered(body):
-	if body != self and body is KinematicBody:
+	if body != self and body is KinematicBody2D:
 		body.hit(sword_power)
+		$Camera2D.shake(.1,50,10)
 
 
 
@@ -208,6 +210,12 @@ func magic_spell():
 		
 		# new instance to launch spell again
 		spell = spell_scene.instance()
+		spell.connect("hit",self,"_on_spell_hit")
+
+
+
+func _on_spell_hit():
+	$Camera2D.shake(.1,50,15)
 
 
 
@@ -216,8 +224,9 @@ func magic_spell():
 
 func hit(amount):
 	
+	$Camera2D.shake(.2,100,25)
 	health -= amount
-	if health <= 0:
+	if health <= 0 and can_move:
 		_change_state(DIE)
 
 

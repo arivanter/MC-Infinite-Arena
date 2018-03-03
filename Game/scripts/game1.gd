@@ -24,3 +24,7 @@ func _on_player_dead():
 func _input(event):
 	if event.is_action_pressed("ui_focus_next"):
 		$player/EndWave.show()
+
+
+func _on_enemy1_dead():
+	$player/EndWave.show()

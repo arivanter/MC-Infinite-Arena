@@ -56,7 +56,6 @@ scale = Vector2( 0.2, 0.2 )
 
 [node name="player" parent="." index="3" instance=ExtResource( 4 )]
 
-editor/display_folded = true
 position = Vector2( 1522.28, 2031.8 )
 
 [node name="PauseMenu" parent="player" index="0" instance=ExtResource( 5 )]
@@ -71,14 +70,16 @@ _sections_unfolded = [ "Pause", "Transform", "Z Index" ]
 visible = false
 position = Vector2( -639.265, -362.073 )
 z_index = 2
-_sections_unfolded = [ "Visibility", "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [node name="EndWave" parent="player" index="7" instance=ExtResource( 7 )]
 
 visible = false
 position = Vector2( -641.76, -363.389 )
 z_index = 2
-_sections_unfolded = [ "Visibility", "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
+
+[connection signal="dead" from="enemy1" to="." method="_on_enemy1_dead"]
 
 [connection signal="dead" from="player" to="." method="_on_player_dead"]
 
