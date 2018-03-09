@@ -6,9 +6,12 @@ extends Node2D
 
 
 func _ready():
+	hide()
 	$AnimationPlayer.play("fadein")
+	show()
 	$player/PauseMenu.hide()
 	$player/GameOver.hide()
+	$player/EndWave.hide()
 
 func _process(delta):
 	if Input.is_action_pressed("ui_pause"):

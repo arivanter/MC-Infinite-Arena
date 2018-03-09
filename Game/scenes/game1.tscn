@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/game1.gd" type="Script" id=1]
-[ext_resource path="res://scenes/arena1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/arena2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/enemy1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/PauseMenu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/EndWave.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/EndWave.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/PauseMenu.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=1]
 
@@ -27,11 +27,11 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="Game" type="Node2D" index="0"]
+[node name="Game" type="Node2D"]
 
 position = Vector2( 1, 0 )
 script = ExtResource( 1 )
-_sections_unfolded = [ "Pause", "Visibility" ]
+_sections_unfolded = [ "Pause", "Transform", "Visibility" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
 
@@ -45,39 +45,35 @@ blend_times = [  ]
 
 [node name="World" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 1197.19, 1158.06 )
 scale = Vector2( 3.2, 3.2 )
-_sections_unfolded = [ "Transform", "Z Index" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="enemy1" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 2520.32, 1396.82 )
+position = Vector2( 4002.83, 998.391 )
 scale = Vector2( 0.2, 0.2 )
 
 [node name="player" parent="." index="3" instance=ExtResource( 4 )]
 
-position = Vector2( 1522.28, 2031.8 )
+position = Vector2( 3135.09, 1457.3 )
 
-[node name="PauseMenu" parent="player" index="0" instance=ExtResource( 5 )]
-
-visible = false
-position = Vector2( -644.021, -366.073 )
-z_index = 2
-_sections_unfolded = [ "Pause", "Transform", "Z Index" ]
-
-[node name="GameOver" parent="player" index="1" instance=ExtResource( 6 )]
+[node name="GameOver" parent="player" index="7" instance=ExtResource( 5 )]
 
 visible = false
-position = Vector2( -639.265, -362.073 )
+position = Vector2( -620.276, -379.436 )
 z_index = 2
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
-[node name="EndWave" parent="player" index="7" instance=ExtResource( 7 )]
+[node name="EndWave" parent="player" index="8" instance=ExtResource( 6 )]
 
 visible = false
-position = Vector2( -641.76, -363.389 )
+position = Vector2( -652.085, -402.157 )
 z_index = 2
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
+
+[node name="PauseMenu" parent="player" index="9" instance=ExtResource( 7 )]
+
+visible = false
+position = Vector2( -631.636, -372.62 )
+z_index = 2
 
 [connection signal="dead" from="enemy1" to="." method="_on_enemy1_dead"]
 

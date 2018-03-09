@@ -3,13 +3,13 @@ extends KinematicBody2D
 # enemy parameters 
 
 onready var player = get_parent().get_node("player")
-var multiplier = 1
-var power = 25
-var health = 100
+var multiplier = 1.0
+var power = 25.0
+var health = 500.0
 var atk_timer = null
 var can_move
 var move_dir_rand
-var WALK_SPEED = 225
+var WALK_SPEED = 200.0
 var velocity = Vector2()
 var timer = null
 var walk_delay = 2
@@ -18,19 +18,17 @@ signal dead
 
 # state machine variables
 
-enum STATES {WALK, ATTACK, DIE}
-var current_state = null
-var previous_state = null
 
 
 
 func _ready():
 	
-	_change_state(WALK)
 	can_move = true
 	health *= multiplier
 	power *= multiplier
+	WALK_SPEED *= multiplier
 	
+	# walk timer
 	timer = Timer.new()
 	timer.set_one_shot(true)
 	timer.wait_time = walk_delay
@@ -56,36 +54,12 @@ func _physics_process(delta):
 		move_and_slide(velocity, Vector2(0,0))
 	if timer.is_stopped():
 		timer.start()
-	if current_state == ATTACK and atk_timer.is_stopped():
-		atk_timer.start()
 			
 			
 		# reset step to idle after finishing walk
 #		elif current_state == WALK and move_dir_rand == 0:
 #			if anim.current_animation != "":
 #				anim.seek(0.0,true)
-
-
-
-#######################
-#### state machine ####
-
-func _change_state(new_state):
-	
-	previous_state = current_state
-	current_state = new_state
-
-	# initialize/enter the state
-	match new_state:
-		WALK:
-#			movement_animation(velocity)
-#			aux_anim_name = anim.current_animation # for animation selection (attack and magic)
-			pass
-			
-		ATTACK:
-			atk_timer.start()
-		DIE:
-			die()
 	
 	
 	
@@ -125,27 +99,30 @@ func select_random_dir():
 
 func attack():
 	player.hit(power)
+	atk_timer.start()
 	
 	
 	
 func _on_TraceArea_body_entered(body):
 	if body == player:
 		following_player = true
+		WALK_SPEED = 375.0
 
 
 
 func _on_TraceArea_body_exited(body):
 	if body == player:
 		following_player = false
+		WALK_SPEED = 250.0
 		
 		
 	
 func _on_AttackArea_body_entered( body ):
 	if body == player:
-		_change_state(ATTACK)
+		attack()
 
 func _on_AttackArea_body_exited( body ):
-	_change_state(WALK)
+	atk_timer.stop()
 	
 	
 ###########################
@@ -163,7 +140,7 @@ func hit(damage):
 	$Sprite.self_modulate = Color(1,1,1)
 	health -= damage
 	if health <= 0:
-		_change_state(DIE)
+		die()
 		
 		
 		
@@ -179,8 +156,8 @@ func die():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
-	queue_free()
 	emit_signal("dead")
+	queue_free()
 
 
 

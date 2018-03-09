@@ -2,15 +2,26 @@ extends KinematicBody2D
 
 # player parameters
 
-var WALK_SPEED = 300
+var absol_mul = 1.0 # for absolute power increase prize
+var WALK_SPEED = 450.0 * absol_mul
 var velocity = Vector2()
-var max_health = 100
-var max_mana = 100
+var max_health = 100.0 * absol_mul
+var max_mana = 100.0 * absol_mul
 var health
 var mana
-var sword_power = 25
+var mana_regen = 15.0 * absol_mul
+var mana_depletion = .2
+var health_regen = .1 * absol_mul
+var sword_power = 25.0 * absol_mul
+var spell_mul = 1.0 * absol_mul
 var can_move
 signal dead
+
+# prize variable array
+var bonuses = [WALK_SPEED, max_health, max_mana, mana_regen, mana_depletion, health_regen, sword_power, spell_mul, absol_mul]
+var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento de mana reducido", "Regeneracion de HP", "Poder de tu espada", "Poder de tu magia", "Poder total"]
+
+
 
 # node variables
 
@@ -44,6 +55,7 @@ func _ready():
 	# set initial idle position
 	anim.current_animation = "walk_front"
 	anim.stop()
+	
 
 
 
@@ -146,6 +158,7 @@ func attack():
 	if can_move:
 		attack_animation()
 		attack_area.disabled = false
+		can_move = false
 		var t = Timer.new()
 		t.set_wait_time(.2)
 		t.set_one_shot(true)
@@ -153,6 +166,7 @@ func attack():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
+		can_move = true
 		attack_area.disabled = true
 		
 		
@@ -161,6 +175,8 @@ func _on_Attack_area_body_entered(body):
 	if body != self and body is KinematicBody2D:
 		body.hit(sword_power)
 		$Camera2D.shake(.1,50,10)
+		if mana < max_mana:
+			mana += mana_regen
 
 
 
@@ -186,6 +202,7 @@ func attack_animation():
 
 
 # magic
+
 func magic_spell():
 	
 	if can_move and mana > 0:
@@ -206,6 +223,7 @@ func magic_spell():
 			anim.play("atk_right")
 		
 		mana -= spell.cost
+		spell.multiplier = spell_mul
 		add_child(spell)
 		
 		# new instance to launch spell again
@@ -240,8 +258,8 @@ func heal():
 			anim.play("heal")
 			
 		# heal speed and ratio
-		health += .1
-		mana -= .2
+		health += health_regen
+		mana -= mana_depletion
 	else:
 		$HealthParticles.emitting = false
 		anim.current_animation = "walk_front"
@@ -274,3 +292,29 @@ func die():
 	yield(t, "timeout")
 	t.queue_free()
 	emit_signal("dead")
+
+
+
+##########################
+#### power management ####
+
+func inc_pow(stat,multiplier):
+	
+	if stat == 0:
+		WALK_SPEED *= multiplier
+	elif stat == 1:
+		max_health *= multiplier
+	elif stat == 2:
+		max_mana *= multiplier 
+	elif stat == 3:
+		mana_regen *= multiplier
+	elif stat == 4:
+		mana_depletion *= multiplier
+	elif stat == 5:
+		health_regen *= multiplier
+	elif stat == 6:
+		sword_power *= multiplier
+	elif stat == 7:
+		spell_mul *= multiplier
+	elif stat == 8:
+		absol_mul *= multiplier

@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/maps/stairs.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D" index="0"]
+
+[node name="stairs" type="Sprite" parent="." index="0"]
+
+position = Vector2( 16.5678, 15.8413 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+_sections_unfolded = [ "Animation" ]
+
+[node name="stairs2" type="Sprite" parent="." index="1"]
+
+position = Vector2( 70.5858, 16.1333 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+frame = 1
+_sections_unfolded = [ "Animation" ]
+
+[node name="stairs3" type="Sprite" parent="." index="2"]
+
+position = Vector2( 140.079, 15.5494 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+frame = 2
+_sections_unfolded = [ "Animation" ]
+
+[node name="stairs4" type="Sprite" parent="." index="3"]
+
+position = Vector2( 215.705, 16.4253 )
+texture = ExtResource( 1 )
+vframes = 2
+hframes = 2
+frame = 3
+_sections_unfolded = [ "Animation" ]
+
+

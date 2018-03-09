@@ -1,10 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/EndWave.gd" type="Script" id=1]
 [ext_resource path="res://fonts/RINGM___.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://textures/controls/Buttons.png" type="Texture" id=3]
 
-
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 
 size = 75
 use_mipmaps = false
@@ -12,10 +12,18 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 
 size = 50
 use_mipmaps = true
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 50
+use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
@@ -30,9 +38,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1288.0
-margin_bottom = 728.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 1290.0
+margin_bottom = 730.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -50,11 +61,12 @@ margin_top = 52.0
 margin_right = 1169.0
 margin_bottom = 163.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "O l e a d a    t e r m i n a d a"
 clip_text = true
 percent_visible = 1.0
@@ -73,11 +85,12 @@ margin_top = 170.0
 margin_right = 832.0
 margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Elige tu premio:"
 percent_visible = 1.0
 lines_skipped = 0
@@ -90,17 +103,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 979.0
-margin_top = 595.0
-margin_right = 1190.0
-margin_bottom = 656.0
+margin_left = 953.0
+margin_top = 572.0
+margin_right = 1212.0
+margin_bottom = 697.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
-text = "Premio 3"
+custom_fonts/font = SubResource( 2 )
+text = "Regenerar
+Mana"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -112,17 +128,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 533.0
-margin_top = 594.0
-margin_right = 744.0
-margin_bottom = 655.0
+margin_left = 519.0
+margin_top = 559.0
+margin_right = 764.0
+margin_bottom = 684.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
-text = "Premio 2"
+custom_fonts/font = SubResource( 2 )
+text = "Bono
+Aleatorio"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -134,17 +153,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 86.0
-margin_top = 595.0
-margin_right = 297.0
-margin_bottom = 656.0
+margin_left = 54.0
+margin_top = 559.0
+margin_right = 324.0
+margin_bottom = 684.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 1 )
-text = "Premio 1"
+custom_fonts/font = SubResource( 2 )
+text = "Regenerar 
+Salud"
+align = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -161,6 +183,7 @@ margin_top = 321.0
 margin_right = 310.0
 margin_bottom = 532.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -172,6 +195,15 @@ shortcut = null
 group = null
 flat = false
 align = 1
+
+[node name="Sprite" type="Sprite" parent="Button" index="0"]
+
+position = Vector2( 115, 160 )
+scale = Vector2( 9, 9 )
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 2
+_sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="Button2" type="Button" parent="." index="7"]
 
@@ -184,6 +216,7 @@ margin_top = 316.0
 margin_right = 760.0
 margin_bottom = 527.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -195,6 +228,16 @@ shortcut = null
 group = null
 flat = false
 align = 1
+
+[node name="Sprite" type="Sprite" parent="Button2" index="0"]
+
+position = Vector2( 115, 160 )
+scale = Vector2( 9, 9 )
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 2
+frame = 2
+_sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="Button3" type="Button" parent="." index="8"]
 
@@ -207,6 +250,7 @@ margin_top = 319.0
 margin_right = 1200.0
 margin_bottom = 530.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -218,6 +262,58 @@ shortcut = null
 group = null
 flat = false
 align = 1
+
+[node name="Sprite" type="Sprite" parent="Button3" index="0"]
+
+position = Vector2( 115, 160 )
+scale = Vector2( 9, 9 )
+texture = ExtResource( 3 )
+vframes = 2
+hframes = 2
+frame = 1
+_sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="secret_prize" type="ColorRect" parent="." index="9"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 3.0
+margin_top = 159.0
+margin_right = 1288.0
+margin_bottom = 280.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0.289063, 0.169373, 0.169373, 1 )
+
+[node name="Label" type="Label" parent="secret_prize" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1.0
+margin_right = 1284.0
+margin_bottom = 122.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Plceholder"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 
