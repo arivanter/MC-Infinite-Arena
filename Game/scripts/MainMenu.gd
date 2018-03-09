@@ -3,6 +3,7 @@ extends Node2D
 var topscore = 100
 
 func _ready():
+	randomize()
 	$AnimationPlayer.play("fadein")
 
 #func _process(delta):

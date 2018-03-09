@@ -6,14 +6,13 @@ var multiplier = 1
 
 var direction = Vector2()
 var speed = 1000
-var cost = 10 * multiplier
-var power = 50 * multiplier
+var cost = 20 
+var power = 50 
 
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
+	cost *= multiplier
+	power *= multiplier
 
 func _process(delta):
 	position += direction * speed * delta
@@ -26,8 +25,11 @@ func _on_VisibilityNotifier2D_screen_exited():
 func _on_Fire1_body_entered( body ):
 	if body == get_parent():
 		yield()
-	set_process(false)
 	emit_signal("hit")
+	set_process(false)
+	if body is KinematicBody2D:
+		body.hit(power)
+	$CollisionShape2D.queue_free()
 	$particles/Sprite.hide()
 	$particles.emitting = false
 	$explode.emitting = true

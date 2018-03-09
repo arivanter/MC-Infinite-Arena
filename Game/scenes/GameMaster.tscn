@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/GameMaster.gd" type="Script" id=1]
+[ext_resource path="res://scenes/arena2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/GameOver.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/PauseMenu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/EndWave.tscn" type="PackedScene" id=6]
+
+[node name="GameMaster" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+
+[node name="World" parent="." index="0" instance=ExtResource( 2 )]
+
+position = Vector2( -716.803, 1331.21 )
+scale = Vector2( 3.2, 3.2 )
+
+[node name="player" parent="." index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 2413.28, 2886.85 )
+
+[node name="GameOver" parent="player" index="7" instance=ExtResource( 4 )]
+
+visible = false
+position = Vector2( -606.187, -387.001 )
+
+[node name="PauseMenu" parent="player" index="8" instance=ExtResource( 5 )]
+
+visible = false
+position = Vector2( -606.187, -397.275 )
+
+[node name="EndWave" parent="player" index="9" instance=ExtResource( 6 )]
+
+visible = false
+position = Vector2( -606.187, -393.85 )
+
+

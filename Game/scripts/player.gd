@@ -1,42 +1,65 @@
 extends KinematicBody2D
 
-var max_health = 100
-var max_mana = 100
+# player parameters
+
+var absol_mul = 1.0 # for absolute power increase prize
+var WALK_SPEED = 450.0 * absol_mul
+var velocity = Vector2()
+var max_health = 100.0 * absol_mul
+var max_mana = 100.0 * absol_mul
 var health
 var mana
-var can_momve
+var mana_regen = 15.0 * absol_mul
+var mana_depletion = .2
+var health_regen = .1 * absol_mul
+var sword_power = 25.0 * absol_mul
+var spell_mul = 1.0 * absol_mul
+var can_move
 signal dead
 
-export var WALK_SPEED = 300
+# prize variable array
+var bonuses = [WALK_SPEED, max_health, max_mana, mana_regen, mana_depletion, health_regen, sword_power, spell_mul, absol_mul]
+var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento de mana reducido", "Regeneracion de HP", "Poder de tu espada", "Poder de tu magia", "Poder total"]
+
+
+
+# node variables
+
 onready var anim = $Sprite/AnimationPlayer
 onready var attack_area = $Attack_area/CollisionShape2D
+
+# state machine variables
 
 enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC}
 var current_state = null
 var previous_state = null
 var aux_anim_name = ""
 
+#magic variable node
+
 var spell_scene = load("res://scenes/spells/Fire1.tscn")
 var spell = spell_scene.instance()
-var attack_spell
+
+
 
 func _ready():
+	
 	health = max_health
 	mana = max_mana
-	can_momve = true
+	can_move = true
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
 	$Attack_area/CollisionShape2D.disabled = true
+	spell.connect("hit",self,"_on_spell_hit")
 	
 	# set initial idle position
 	anim.current_animation = "walk_front"
 	anim.stop()
 	
-	
-	
+
+
+
 func _physics_process(delta):
-	
-	var velocity = Vector2()
 	
 	# process input, checked by priority
 	if (Input.is_action_just_pressed("ui_sword")):
@@ -63,28 +86,26 @@ func _physics_process(delta):
 	elif (Input.is_action_pressed("ui_down")):
 		velocity.y =   WALK_SPEED
 		velocity.x = 0
-		
-	
 	
 	# reduce vector to 0 to stop moving
 	else:
 		velocity.x = 0
 		velocity.y = 0
+	
 		
-		
-	if can_momve:
+	if can_move:
 		if velocity != Vector2(0,0):
-			movement_animation(velocity)
 			_change_state(WALK)
 			
 		# reset step to idle after releasing walk input
 		elif current_state == WALK:
 			if anim.current_animation != "":
 				anim.seek(0.0,true)
-				
-		move_and_slide(velocity, Vector2(0,0))
-		
 
+
+
+#######################
+#### state machine ####
 
 func _change_state(new_state):
 	
@@ -94,10 +115,10 @@ func _change_state(new_state):
 	# initialize/enter the state
 	match new_state:
 		WALK:
-			attack_area.disabled = true
-			aux_anim_name = anim.current_animation # for animation selection
+			movement_animation(velocity)
+			aux_anim_name = anim.current_animation # for animation selection (attack and magic)
+			move_and_slide(velocity, Vector2(0,0))
 		ATTACK:
-			attack_area.disabled = false
 			attack()
 		MAGIC:
 			magic_spell()
@@ -107,6 +128,9 @@ func _change_state(new_state):
 			die()
 
 
+
+##################
+#### movement ####
 
 func movement_animation(velocity):
 	
@@ -126,44 +150,62 @@ func movement_animation(velocity):
 	
 	
 	
-func attack_animation():
-	
-	# select directional attack animation
-	if can_momve:
-		if aux_anim_name == "walk_back" and anim.current_animation != "atk_back":
-			$AttackParticles.emitting = true
-			anim.play("atk_back")
-				
-		elif aux_anim_name == "walk_front" and anim.current_animation != "atk_front":
-			$AttackParticles.emitting = true
-			anim.play("atk_front")
-				
-		elif aux_anim_name == "walk_left" and anim.current_animation != "atk_left":
-			$AttackParticles.emitting = true
-			anim.play("atk_left")
-				
-		elif aux_anim_name == "walk_right" and anim.current_animation != "atk_right":
-			$AttackParticles.emitting = true
-			anim.play("atk_right")
-	
-	
+###################
+#### attacking ####	
 	
 func attack():
 	
-	attack_animation()
-	#calculate attack
+	if can_move:
+		attack_animation()
+		attack_area.disabled = false
+		can_move = false
+		var t = Timer.new()
+		t.set_wait_time(.2)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		can_move = true
+		attack_area.disabled = true
+		
+		
+		
+func _on_Attack_area_body_entered(body):
+	if body != self and body is KinematicBody2D:
+		body.hit(sword_power)
+		$Camera2D.shake(.1,50,10)
+		if mana < max_mana:
+			mana += mana_regen
 
 
 
-func set_attack_spell():
-	attack_spell = "Fire1"
-	pass
+func attack_animation():
+	
+	# select directional attack animation
+	if aux_anim_name == "walk_back" and anim.current_animation != "atk_back":
+		$AttackParticles.emitting = true
+		anim.play("atk_back")
+			
+	elif aux_anim_name == "walk_front" and anim.current_animation != "atk_front":
+		$AttackParticles.emitting = true
+		anim.play("atk_front")
+			
+	elif aux_anim_name == "walk_left" and anim.current_animation != "atk_left":
+		$AttackParticles.emitting = true
+		anim.play("atk_left")
+			
+	elif aux_anim_name == "walk_right" and anim.current_animation != "atk_right":
+		$AttackParticles.emitting = true
+		anim.play("atk_right")
 
 
+
+# magic
 
 func magic_spell():
 	
-	if can_momve and mana > 0:
+	if can_move and mana > 0:
 		if aux_anim_name == "walk_back":
 			spell.direction = Vector2 (0,-1)
 			anim.play("atk_back")
@@ -181,44 +223,66 @@ func magic_spell():
 			anim.play("atk_right")
 		
 		mana -= spell.cost
+		spell.multiplier = spell_mul
 		add_child(spell)
 		
+		# new instance to launch spell again
 		spell = spell_scene.instance()
-		
+		spell.connect("hit",self,"_on_spell_hit")
+
+
+
+func _on_spell_hit():
+	$Camera2D.shake(.1,50,15)
+
+
+
+###########################
+#### health management ####
+
+func hit(amount):
+	
+	$Camera2D.shake(.2,100,25)
+	health -= amount
+	if health <= 0 and can_move:
+		_change_state(DIE)
 
 
 
 func heal():
+	
 	if mana > 0 and health < max_health:
 		$HealthParticles.emitting = true
-		can_momve = false
+		can_move = false
 		if anim.current_animation != "heal":
 			anim.play("heal")
 			
 		# heal speed and ratio
-		health += .1
-		mana -= .2
+		health += health_regen
+		mana -= mana_depletion
 	else:
 		$HealthParticles.emitting = false
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)
 		current_state = WALK
-		
+
 
 
 func _input(event):
+	
 	if event.is_action_released("ui_heal"):
 		$HealthParticles.emitting = false
-		can_momve = true
+		can_move = true
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)
 		current_state = WALK
 
 
+
 func die():
 	
-	#setup for animation, prevents movement and calls game over
-	can_momve = false
+	#setup for animation, prevents movement and emits signal
+	can_move = false
 	anim.play("die")
 	var t = Timer.new()
 	t.set_wait_time(2)
@@ -231,29 +295,26 @@ func die():
 
 
 
+##########################
+#### power management ####
 
-
-func hit(amount):
-	health -= amount
-	if health <= 0:
-		_change_state(DIE)
-
-#####################################################
-#####################################################
-########### PLACEHOLDER FOR DAMAGE PLAYER ###########
-#####################################################
-#####################################################
-#func _on_Area2D_area_entered( area ):
-#	damage(area)
-#	if health <= 0:
-#		_change_state(DIE)
-#
-#
-#
-#func damage(area):
-#	if area != $Attack_area:
-#		health -= 25
-#####################################################
-#####################################################
-#####################################################
-#####################################################
+func inc_pow(stat,multiplier):
+	
+	if stat == 0:
+		WALK_SPEED *= multiplier
+	elif stat == 1:
+		max_health *= multiplier
+	elif stat == 2:
+		max_mana *= multiplier 
+	elif stat == 3:
+		mana_regen *= multiplier
+	elif stat == 4:
+		mana_depletion *= multiplier
+	elif stat == 5:
+		health_regen *= multiplier
+	elif stat == 6:
+		sword_power *= multiplier
+	elif stat == 7:
+		spell_mul *= multiplier
+	elif stat == 8:
+		absol_mul *= multiplier
