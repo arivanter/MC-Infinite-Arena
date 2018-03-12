@@ -22,7 +22,8 @@ func _on_Button_pressed():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
-	get_tree().change_scene("res://scenes/game1.tscn")
+	get_tree().change_scene("res://scenes/GameMaster.tscn")
+	get_tree().paused = false
 
 
 func _on_Button2_pressed():
@@ -35,3 +36,4 @@ func _on_Button2_pressed():
 	yield(t, "timeout")
 	t.queue_free()
 	get_tree().change_scene("res://scenes/MainMenu.tscn")
+	get_tree().paused = false

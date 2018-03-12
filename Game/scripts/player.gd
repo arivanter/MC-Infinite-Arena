@@ -4,22 +4,30 @@ extends KinematicBody2D
 
 var absol_mul = 1.0 # for absolute power increase prize
 var WALK_SPEED = 450.0 * absol_mul
+var EVADE_SPEED = 25 * absol_mul
+var evade_vect = Vector2()
+var evade_timer
+var knockx = 0
+var knocky = 0
 var velocity = Vector2()
 var max_health = 100.0 * absol_mul
 var max_mana = 100.0 * absol_mul
+var max_stamina = 100 * absol_mul
 var health
 var mana
+var stamina
 var mana_regen = 15.0 * absol_mul
 var mana_depletion = .2
 var health_regen = .1 * absol_mul
-var sword_power = 25.0 * absol_mul
+var stam_regen = .2 * absol_mul
+var sword_power = 20.0 * absol_mul
 var spell_mul = 1.0 * absol_mul
 var can_move
 signal dead
 
 # prize variable array
-var bonuses = [WALK_SPEED, max_health, max_mana, mana_regen, mana_depletion, health_regen, sword_power, spell_mul, absol_mul]
-var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento de mana reducido", "Regeneracion de HP", "Poder de tu espada", "Poder de tu magia", "Poder total"]
+var bonuses = [WALK_SPEED, max_health, max_mana, mana_regen, mana_depletion, health_regen, sword_power, spell_mul, absol_mul, stam_regen, max_stamina]
+var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento de mana reducido", "Regeneracion de HP", "Poder de tu espada", "Poder de tu magia", "Poder total", "Stamina", "Regeneracion de stamina"]
 
 
 
@@ -30,12 +38,12 @@ onready var attack_area = $Attack_area/CollisionShape2D
 
 # state machine variables
 
-enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC}
+enum STATES {WALK, ATTACK, HEAL, DIE, MAGIC, EVADE}
 var current_state = null
 var previous_state = null
 var aux_anim_name = ""
 
-#magic variable node
+# magic variable node
 
 var spell_scene = load("res://scenes/spells/Fire1.tscn")
 var spell = spell_scene.instance()
@@ -46,11 +54,18 @@ func _ready():
 	
 	health = max_health
 	mana = max_mana
+	stamina = max_stamina
 	can_move = true
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
 	$Attack_area/CollisionShape2D.disabled = true
 	spell.connect("hit",self,"_on_spell_hit")
+	
+	evade_timer = Timer.new()
+	evade_timer.set_one_shot(true)
+	evade_timer.wait_time = .2
+	evade_timer.connect("timeout", self, "end_evade")
+	add_child(evade_timer)
 	
 	# set initial idle position
 	anim.current_animation = "walk_front"
@@ -60,13 +75,30 @@ func _ready():
 
 
 func _physics_process(delta):
-	
+	move_and_collide(Vector2(knockx,knocky))
+	if knockx != 0 or knocky != 0:
+		if knockx > 0:
+			knockx -= 1
+		elif knockx < 0:
+			knockx += 1
+		if knocky > 0:
+			knocky -= 1
+		elif knocky < 0:
+			knocky += 1
+	if stamina < max_stamina:
+		stamina += stam_regen
 	# process input, checked by priority
 	if (Input.is_action_just_pressed("ui_sword")):
-		_change_state(ATTACK)
+		if can_move:
+			_change_state(ATTACK)
 		
 	elif (Input.is_action_just_pressed("ui_magic")):
-		_change_state(MAGIC)
+		if can_move:
+			_change_state(MAGIC)
+		
+	elif (Input.is_action_just_pressed("ui_accept")):
+		if can_move and stamina >= 25:
+			_change_state(EVADE)
 	
 	elif (Input.is_action_pressed("ui_heal")):
 		_change_state(HEAL)
@@ -92,6 +124,8 @@ func _physics_process(delta):
 		velocity.x = 0
 		velocity.y = 0
 	
+	if current_state == EVADE and not evade_timer.is_stopped():
+		move_and_collide(evade_vect)
 		
 	if can_move:
 		if velocity != Vector2(0,0):
@@ -126,6 +160,8 @@ func _change_state(new_state):
 			heal()
 		DIE:
 			die()
+		EVADE:
+			evade()
 
 
 
@@ -150,6 +186,43 @@ func movement_animation(velocity):
 	
 	
 	
+func evade():
+	stamina -= 25
+	if evade_timer.is_stopped():
+		evade_timer.start()
+	can_move = false
+	if aux_anim_name == "walk_back" and anim.current_animation != "atk_back":
+		anim.play("atk_back")
+		anim.seek(0.0,true)
+		anim.stop()
+		evade_vect = Vector2(0,-EVADE_SPEED)
+			
+	elif aux_anim_name == "walk_front" and anim.current_animation != "atk_front":
+		anim.play("atk_front")
+		anim.seek(0.0,true)
+		anim.stop()
+		evade_vect = Vector2(0,EVADE_SPEED)
+			
+	elif aux_anim_name == "walk_left" and anim.current_animation != "atk_left":
+		anim.play("atk_left")
+		anim.seek(0.0,true)
+		anim.stop()
+		evade_vect = Vector2(-EVADE_SPEED,0)
+			
+	elif aux_anim_name == "walk_right" and anim.current_animation != "atk_right":
+		anim.play("atk_right")
+		anim.seek(0.0,true)
+		anim.stop()
+		evade_vect = Vector2(EVADE_SPEED,0)
+	
+	
+	
+func end_evade():
+	can_move = true
+	anim.play(aux_anim_name)
+	anim.seek(0.0,true)
+	anim.stop()
+	evade_vect = Vector2(0,0)
 ###################
 #### attacking ####	
 	
@@ -174,7 +247,7 @@ func attack():
 func _on_Attack_area_body_entered(body):
 	if body != self and body is KinematicBody2D:
 		body.hit(sword_power)
-		$Camera2D.shake(.1,50,10)
+		$Camera2D.shake(.1,100,10)
 		if mana < max_mana:
 			mana += mana_regen
 
@@ -241,19 +314,41 @@ func _on_spell_hit():
 #### health management ####
 
 func hit(amount):
-	
-	$Camera2D.shake(.2,100,25)
+	randomize()
+	$Camera2D.shake(.2,50,30)
 	health -= amount
+	# knockback
+	var x = randi()%2
+	var y = randi()%2
+	var mulx = randi()%2
+	var muly = randi()%2
+	if mulx == 0:
+		mulx = -1
+	if muly == 0:
+		muly = -1
+	knockx = x * mulx * 25
+	knocky = y * muly * 25
+	
+	# flash
+	$Sprite.self_modulate = Color(225,225,225)
+	var t = Timer.new()
+	t.set_wait_time(.2)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
+	$Sprite.self_modulate = Color(1,1,1)
+	
 	if health <= 0 and can_move:
 		_change_state(DIE)
 
 
 
 func heal():
-	
+	can_move = false
 	if mana > 0 and health < max_health:
 		$HealthParticles.emitting = true
-		can_move = false
 		if anim.current_animation != "heal":
 			anim.play("heal")
 			
@@ -309,7 +404,7 @@ func inc_pow(stat,multiplier):
 	elif stat == 3:
 		mana_regen *= multiplier
 	elif stat == 4:
-		mana_depletion *= multiplier
+		mana_depletion /= multiplier
 	elif stat == 5:
 		health_regen *= multiplier
 	elif stat == 6:
@@ -318,3 +413,7 @@ func inc_pow(stat,multiplier):
 		spell_mul *= multiplier
 	elif stat == 8:
 		absol_mul *= multiplier
+	elif stat == 9:
+		stam_regen *= multiplier
+	elif stat == 10:
+		max_stamina *= multiplier 

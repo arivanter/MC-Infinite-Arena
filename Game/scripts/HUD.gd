@@ -20,4 +20,6 @@ func _process(delta):
 		$mana.max_value = parent.max_mana
 		$health.value = parent.health
 		$mana.value = parent.mana
+		$stamina.max_value = parent.max_stamina
+		$stamina.value = parent.stamina
 

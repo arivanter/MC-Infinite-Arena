@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/settings.gd" type="Script" id=1]
 [ext_resource path="res://fonts/RINGM___.TTF" type="DynamicFontData" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://textures/controls/z.png" type="Texture" id=5]
 [ext_resource path="res://textures/controls/c.png" type="Texture" id=6]
 [ext_resource path="res://textures/controls/x.png" type="Texture" id=7]
+[ext_resource path="res://textures/controls/space.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -101,11 +102,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = -3.0
-margin_right = 1283.0
-margin_bottom = 722.0
+margin_left = 7.0
+margin_top = -1.0
+margin_right = 1287.0
+margin_bottom = 724.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -123,6 +125,7 @@ margin_top = 188.0
 margin_right = 1088.0
 margin_bottom = 231.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -149,6 +152,7 @@ margin_top = 12.0
 margin_right = 101.0
 margin_bottom = 55.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -170,11 +174,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 427.0
-margin_top = 34.0
-margin_right = 899.0
-margin_bottom = 155.0
+margin_left = 395.0
+margin_top = 32.0
+margin_right = 938.0
+margin_bottom = 153.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -197,6 +202,7 @@ margin_top = 193.0
 margin_right = 458.0
 margin_bottom = 230.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -219,6 +225,7 @@ margin_top = 180.0
 margin_right = 675.0
 margin_bottom = 240.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -238,21 +245,21 @@ texture = ExtResource( 4 )
 
 [node name="Shift" type="Sprite" parent="." index="7"]
 
-position = Vector2( 495.524, 487.699 )
+position = Vector2( 429.226, 401.757 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Space" type="Sprite" parent="." index="8"]
 
-position = Vector2( 1083.36, 489.592 )
+position = Vector2( 1052.06, 400.41 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Space2" type="Sprite" parent="." index="9"]
 
-position = Vector2( 784.285, 487.437 )
+position = Vector2( 739.38, 401.053 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 7 )
 _sections_unfolded = [ "Transform" ]
@@ -268,6 +275,7 @@ margin_top = 595.0
 margin_right = 285.0
 margin_bottom = 632.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -285,11 +293,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 960.0
-margin_top = 595.0
-margin_right = 1232.0
-margin_bottom = 632.0
+margin_left = 918.0
+margin_top = 488.0
+margin_right = 1190.0
+margin_bottom = 525.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -307,11 +316,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 655.0
-margin_top = 594.0
-margin_right = 905.0
-margin_bottom = 631.0
+margin_left = 616.0
+margin_top = 491.0
+margin_right = 866.0
+margin_bottom = 528.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -329,11 +339,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 449.0
-margin_top = 594.0
-margin_right = 536.0
-margin_bottom = 631.0
+margin_left = 385.0
+margin_top = 492.0
+margin_right = 472.0
+margin_bottom = 529.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -351,11 +362,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 174.0
-margin_top = 301.0
-margin_right = 607.0
-margin_bottom = 343.0
+margin_left = 180.0
+margin_top = 247.0
+margin_right = 613.0
+margin_bottom = 289.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -373,11 +385,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 620.0
-margin_top = 289.0
-margin_right = 660.0
-margin_bottom = 349.0
+margin_left = 628.0
+margin_top = 238.0
+margin_right = 668.0
+margin_bottom = 298.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
@@ -388,6 +401,35 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
+
+[node name="Evade" type="Label" parent="." index="16"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 660.0
+margin_top = 661.0
+margin_right = 748.0
+margin_bottom = 698.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 8 )
+text = "Evadir"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Sprite" type="Sprite" parent="." index="17"]
+
+position = Vector2( 706.207, 641.611 )
+scale = Vector2( 0.336496, 0.233747 )
+texture = ExtResource( 8 )
 
 [connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]
 

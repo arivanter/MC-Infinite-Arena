@@ -13,6 +13,7 @@ var power = 50
 func _ready():
 	cost *= multiplier
 	power *= multiplier
+	scale *= multiplier
 
 func _process(delta):
 	position += direction * speed * delta

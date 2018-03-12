@@ -21,9 +21,15 @@ func _on_PlayButton_pressed():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
-	get_tree().change_scene("res://scenes/game1.tscn")
+	get_tree().change_scene("res://scenes/GameMaster.tscn")
 
 
 func _on_SettingsButton_pressed():
 	get_tree().change_scene("res://scenes/settings.tscn")
+	
+	
+	
+func _input(event):
+	if event.is_action_pressed("ui_pause"):
+		get_tree().quit()
 

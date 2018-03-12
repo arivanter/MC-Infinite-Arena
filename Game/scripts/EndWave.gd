@@ -3,6 +3,7 @@ extends Node2D
 onready var player = get_parent()
 onready var prize = $secret_prize
 var bonus_string
+signal confirmed
 
 func _ready():
 	$secret_prize.hide()
@@ -26,6 +27,7 @@ func _on_Button3_pressed():
 	yield(t, "timeout")
 	t.queue_free()
 	hide()
+	emit_signal('confirmed')
 
 
 func _on_Button2_pressed():
@@ -40,6 +42,7 @@ func _on_Button2_pressed():
 	yield(t, "timeout")
 	t.queue_free()
 	hide()
+	emit_signal('confirmed')
 
 
 func _on_Button_pressed():
@@ -54,6 +57,7 @@ func _on_Button_pressed():
 	yield(t, "timeout")
 	t.queue_free()
 	hide()
+	emit_signal('confirmed')
 
 func random_bonus():
 	var bonus_add = float(randi()%10+1)

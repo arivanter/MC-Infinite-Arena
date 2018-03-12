@@ -3,13 +3,16 @@ extends KinematicBody2D
 # enemy parameters 
 
 onready var player = get_parent().get_node("player")
+onready var hp_anim = get_node("Health/AnimationPlayer")
 var multiplier = 1.0
 var power = 25.0
-var health = 500.0
+var max_health = 50.0
+var health
 var atk_timer = null
 var can_move
 var move_dir_rand
 var WALK_SPEED = 200.0
+var FOLLOW_SPEED = 400.0
 var velocity = Vector2()
 var timer = null
 var walk_delay = 2
@@ -24,9 +27,13 @@ signal dead
 func _ready():
 	
 	can_move = true
-	health *= multiplier
+	max_health *= multiplier
+	health = max_health
+	$Health.max_value = max_health
+	$Health.value = health
 	power *= multiplier
 	WALK_SPEED *= multiplier
+	FOLLOW_SPEED *= multiplier
 	
 	# walk timer
 	timer = Timer.new()
@@ -37,7 +44,7 @@ func _ready():
 	
 	atk_timer = Timer.new()
 	atk_timer.set_one_shot(true)
-	atk_timer.wait_time = 1.5
+	atk_timer.wait_time = 1
 	atk_timer.connect("timeout", self, "attack")
 	add_child(atk_timer)
 	
@@ -47,9 +54,10 @@ func _ready():
 
 func _physics_process(delta):
 	
+	$Health.value = health
 	if following_player:
 		velocity = player.position - position
-		velocity = velocity.normalized() * WALK_SPEED
+		velocity = velocity.normalized() * FOLLOW_SPEED
 	if can_move:
 		move_and_slide(velocity, Vector2(0,0))
 	if timer.is_stopped():
@@ -106,20 +114,18 @@ func attack():
 func _on_TraceArea_body_entered(body):
 	if body == player:
 		following_player = true
-		WALK_SPEED = 375.0
 
 
 
 func _on_TraceArea_body_exited(body):
 	if body == player:
 		following_player = false
-		WALK_SPEED = 250.0
 		
 		
 	
 func _on_AttackArea_body_entered( body ):
 	if body == player:
-		attack()
+		atk_timer.start()
 
 func _on_AttackArea_body_exited( body ):
 	atk_timer.stop()
@@ -129,6 +135,8 @@ func _on_AttackArea_body_exited( body ):
 #### health management ####
 
 func hit(damage):
+	if hp_anim.current_animation != "fade":
+		hp_anim.play("fade")
 	$Sprite.self_modulate = Color(225,225,225)
 	var t = Timer.new()
 	t.set_wait_time(.2)
@@ -148,6 +156,7 @@ func die():
 	
 	#setup for animation, prevents movement and emits signal
 	can_move = false
+	atk_timer.stop()
 #	anim.play("die")
 	var t = Timer.new()
 	t.set_wait_time(2)
