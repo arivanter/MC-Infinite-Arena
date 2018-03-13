@@ -8,13 +8,16 @@ func _ready():
 	$Sure.hide()
 
 
-func _process(delta):
-	pass
-
-
+#func _process(delta):
+#	if Input.is_action_just_pressed("ui_pause"):
+#		_on_cotinue_pressed()
+	
+	
+	
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		$cotinue.emit_signal("pressed")
+	if event.is_action_pressed("ui_pause"):
+		_on_cotinue_pressed()
+
 
 
 func _on_exit_pressed():

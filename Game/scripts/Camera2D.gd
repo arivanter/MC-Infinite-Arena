@@ -1,3 +1,8 @@
+# script originally from batmanasb on Godot q&a Camera2D Screen Shake Extension
+# find it here: https://pastebin.com/LY52qRE5
+
+
+
 extends Camera2D
  
 var _duration = 0.0

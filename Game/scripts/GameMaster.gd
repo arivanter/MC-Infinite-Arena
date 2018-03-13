@@ -7,6 +7,7 @@ var enemy_types = []
 var wave = 1
 
 func _ready():
+	randomize()
 	hide()
 	$AnimationPlayer.play("fade")
 	show()
@@ -48,10 +49,12 @@ func generate_random_enemy():
 #	var type = randi()%3
 	var type = 0
 	var enemy = enemy_types[type].instance()
-	# spawn between (100,100) and (5120,3175)
-	enemy.position = Vector2(int(rand_range(100,5120)),int(rand_range(100,3175)))
 	enemy.scale = Vector2(.2,.2)
-	enemy.multiplier += wave/5
+	$Path2D/PathFollow2D.unit_offset = rand_range(0,1)
+	# spawn between (100,100) and (5120,3175)
+	enemy.position = $Path2D/PathFollow2D.position
+	print ($Path2D/PathFollow2D.position)
+	enemy.multiplier += float(float(wave)/5)
 	enemy.connect('dead', self, '_on_enemy_dead')
 	add_child(enemy)
 	
@@ -88,3 +91,4 @@ func end_wave():
 func _input(event):
 	if event.is_action_pressed("ui_pause"):
 		$player/PauseMenu.show()
+		get_tree().paused = true

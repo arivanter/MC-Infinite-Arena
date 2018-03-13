@@ -3,33 +3,30 @@ extends KinematicBody2D
 # player parameters
 
 var absol_mul = 1.0 # for absolute power increase prize
-var WALK_SPEED = 450.0 * absol_mul
-var EVADE_SPEED = 25 * absol_mul
+var WALK_SPEED = 450.0 
+var EVADE_SPEED = 25 
 var evade_vect = Vector2()
 var evade_timer
 var knockx = 0
 var knocky = 0
 var velocity = Vector2()
-var max_health = 100.0 * absol_mul
-var max_mana = 100.0 * absol_mul
-var max_stamina = 100 * absol_mul
+var max_health = 100.0 
+var max_mana = 100.0 
+var max_stamina = 100 
 var health
 var mana
 var stamina
-var mana_regen = 15.0 * absol_mul
+var mana_regen = 15.0 
 var mana_depletion = .2
-var health_regen = .1 * absol_mul
-var stam_regen = .2 * absol_mul
-var sword_power = 20.0 * absol_mul
-var spell_mul = 1.0 * absol_mul
+var health_regen = .1 
+var stam_regen = .2 
+var sword_power = 20.0 
+var spell_mul = 1.0 
 var can_move
 signal dead
 
 # prize variable array
-var bonuses = [WALK_SPEED, max_health, max_mana, mana_regen, mana_depletion, health_regen, sword_power, spell_mul, absol_mul, stam_regen, max_stamina]
 var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento de mana reducido", "Regeneracion de HP", "Poder de tu espada", "Poder de tu magia", "Poder total", "Stamina", "Regeneracion de stamina"]
-
-
 
 # node variables
 
@@ -70,11 +67,13 @@ func _ready():
 	# set initial idle position
 	anim.current_animation = "walk_front"
 	anim.stop()
-	
+
 
 
 
 func _physics_process(delta):
+	if health <= 0 and can_move:
+		_change_state(DIE)
 	move_and_collide(Vector2(knockx,knocky))
 	if knockx != 0 or knocky != 0:
 		if knockx > 0:
@@ -223,6 +222,9 @@ func end_evade():
 	anim.seek(0.0,true)
 	anim.stop()
 	evade_vect = Vector2(0,0)
+	
+	
+	
 ###################
 #### attacking ####	
 	
@@ -250,6 +252,8 @@ func _on_Attack_area_body_entered(body):
 		$Camera2D.shake(.1,100,10)
 		if mana < max_mana:
 			mana += mana_regen
+			if mana > max_mana:
+				mana = max_mana
 
 
 
@@ -314,9 +318,13 @@ func _on_spell_hit():
 #### health management ####
 
 func hit(amount):
-	randomize()
+	
 	$Camera2D.shake(.2,50,30)
 	health -= amount
+	if health <= 0:
+		if current_state != DIE:
+			_change_state(DIE)
+		
 	# knockback
 	var x = randi()%2
 	var y = randi()%2
@@ -339,9 +347,6 @@ func hit(amount):
 	yield(t, "timeout")
 	t.queue_free()
 	$Sprite.self_modulate = Color(1,1,1)
-	
-	if health <= 0 and can_move:
-		_change_state(DIE)
 
 
 
@@ -413,7 +418,23 @@ func inc_pow(stat,multiplier):
 		spell_mul *= multiplier
 	elif stat == 8:
 		absol_mul *= multiplier
+		absol_power_application()
 	elif stat == 9:
 		stam_regen *= multiplier
 	elif stat == 10:
 		max_stamina *= multiplier 
+
+
+
+func absol_power_application():
+	WALK_SPEED *= absol_mul
+	EVADE_SPEED *= absol_mul
+	max_health *= absol_mul
+	max_mana *= absol_mul
+	max_stamina *= absol_mul
+	mana_regen *= absol_mul
+	health_regen *= absol_mul
+	stam_regen *= absol_mul
+	sword_power *= absol_mul
+	spell_mul *= absol_mul
+	mana_depletion /= absol_mul

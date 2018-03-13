@@ -62,7 +62,7 @@ func _on_Button_pressed():
 func random_bonus():
 	var bonus_add = float(randi()%10+1)
 	bonus_add /= 10
-	var rand_val = randi()%len(player.bonuses)
+	var rand_val = randi()%len(player.var_names)
 	bonus_add += 1
 	player.inc_pow(rand_val, bonus_add)
 	bonus_string = player.var_names[rand_val]+" incrementado en "+str((bonus_add-1)*100)+" porciento"

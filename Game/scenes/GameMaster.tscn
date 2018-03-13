@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/GameMaster.gd" type="Script" id=1]
 [ext_resource path="res://scenes/arena2.tscn" type="PackedScene" id=2]
@@ -26,10 +26,17 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="GameMaster" type="Node2D"]
+[sub_resource type="Curve2D" id=2]
+
+bake_interval = 5.0
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 5577.58, 1650.36, 0, 0, 0, 0, 4361.42, 1732.05, 0, 0, 0, 0, 4270.66, 1223.8, 0, 0, 0, 0, 2519.02, 1214.72, 0, 0, 0, 0, 2464.57, 1604.99, 0, 0, 0, 0, 1094.12, 1677.59, 0, 0, 0, 0, 948.904, 824.463, 0, 0, 0, 0, 1493.45, 652.022, 0, 0, 0, 0, 1475.3, -128.5, 0, 0, 0, 0, 948.904, -264.638, 0, 0, 0, 0, 895.51, -1260.46, 0, 0, 0, 0, 3146.2, -1223.52, 0, 0, 0, 0, 3195.11, -489.924, 0, 0, 0, 0, 3890.67, -430.149, 0, 0, 0, 0, 3961.31, -1212.65, 0, 0, 0, 0, 5740.19, -1179.77, 0, 0, 0, 0, 5669.8, -777.519, 0, 0, 0, 0, 5116.7, -737.294, 0, 0, 0, 0, 5036.25, 378.959, 0, 0, 0, 0, 5659.74, 429.241, 0, 0, 0, 0, 5577.58, 1650.36 )
+}
+
+[node name="GameMaster" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-_sections_unfolded = [ "Visibility" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="0"]
 
@@ -43,12 +50,9 @@ blend_times = [  ]
 
 [node name="World" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( -716.803, 1331.21 )
-scale = Vector2( 3.2, 3.2 )
-
 [node name="player" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 2413.28, 2886.85 )
+position = Vector2( 3145.12, 1489.17 )
 _sections_unfolded = [ "Pause", "Transform" ]
 
 [node name="GameOver" parent="player" index="7" instance=ExtResource( 4 )]
@@ -73,6 +77,22 @@ visible = false
 position = Vector2( -606.187, -393.85 )
 z_index = 4
 _sections_unfolded = [ "Pause", "Z Index" ]
+
+[node name="Path2D" type="Path2D" parent="." index="3"]
+
+curve = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" index="0"]
+
+offset = 0.0
+h_offset = 0.0
+v_offset = 0.0
+rotate = true
+cubic_interp = true
+loop = true
+lookahead = 4.0
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="dead" from="player" to="." method="_on_player_dead"]
 
