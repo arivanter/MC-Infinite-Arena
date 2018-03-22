@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://textures/backgrounds/how-to-draw-the-colosseum_1_000000006068_5.jpg" type="Texture" id=2]
 [ext_resource path="res://fonts/RINGM___.TTF" type="DynamicFontData" id=3]
 [ext_resource path="res://textures/Cool Text - MC Infinite Arena 274340198519068.png" type="Texture" id=4]
+[ext_resource path="res://scenes/WaveSelect.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -141,6 +142,12 @@ playback_speed = 1.0
 anims/fadein = SubResource( 3 )
 anims/fadeout = SubResource( 4 )
 blend_times = [  ]
+
+[node name="WaveSelect" parent="." index="5" instance=ExtResource( 5 )]
+
+visible = false
+z_index = 1
+_sections_unfolded = [ "Transform", "Z Index" ]
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
 

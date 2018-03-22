@@ -4,10 +4,13 @@ var enemies
 var remaining_enemies
 var enemy_scenes = ["res://scenes/enemy1.tscn", "res://scenes/enemy2.tscn", "res://scenes/enemy3.tscn"]
 var enemy_types = []
-var wave = 1
+var wave = global.wave
 
 func _ready():
 	randomize()
+	if wave > 1:
+		for i in range(wave):
+			$player/EndWave.random_bonus()
 	hide()
 	$AnimationPlayer.play("fade")
 	show()
@@ -40,8 +43,15 @@ func start_wave():
 		
 	for i in range(enemies):
 		generate_random_enemy()
-	wave += 1
 	remaining_enemies = enemies
+	
+	if global.max_wave != null:
+		if wave > global.max_wave:
+			global.max_wave = wave
+	else:
+		global.max_wave = wave
+	global.save_game()
+	
 	
 	
 	
@@ -53,7 +63,6 @@ func generate_random_enemy():
 	$Path2D/PathFollow2D.unit_offset = rand_range(0,1)
 	# spawn between (100,100) and (5120,3175)
 	enemy.position = $Path2D/PathFollow2D.position
-	print ($Path2D/PathFollow2D.position)
 	enemy.multiplier += float(float(wave)/5)
 	enemy.connect('dead', self, '_on_enemy_dead')
 	add_child(enemy)
@@ -71,6 +80,12 @@ func wave_display():
 
 func _on_player_dead():
 	get_tree().paused = true
+	if global.max_wave != null:
+		if wave > global.max_wave:
+			global.max_wave = wave
+	else:
+		global.max_wave = wave
+	global.save_game()
 	$player/GameOver.show()
 
 
@@ -85,6 +100,7 @@ func _on_enemy_dead():
 func end_wave():
 	$player/EndWave/secret_prize.hide()
 	$player/EndWave.show()
+	wave += 1
 
 
 

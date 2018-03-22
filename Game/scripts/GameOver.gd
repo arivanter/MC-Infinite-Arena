@@ -22,6 +22,7 @@ func _on_Button_pressed():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
+	global.wave = 1
 	get_tree().change_scene("res://scenes/GameMaster.tscn")
 	get_tree().paused = false
 

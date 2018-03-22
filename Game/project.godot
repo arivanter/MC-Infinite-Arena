@@ -14,6 +14,10 @@ config/name="MC Infinite Arena"
 run/main_scene="res://scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+global="*res://scripts/global.gd"
+
 [display]
 
 window/size/width=1280
