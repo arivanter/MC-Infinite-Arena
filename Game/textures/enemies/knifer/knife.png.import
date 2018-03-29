@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex"
+path="res://.import/knife.png-fca7fe1d1fba59f8a59674063f70d916.stex"
 
 [deps]
 
-source_file="res://particles/spark_particle2.png"
-source_md5="907b52c0c7e2668357863bd01721e813"
+source_file="res://textures/enemies/knifer/knife.png"
+source_md5="4f3d53a818e677e4c6eaf3c6a0752b22"
 
-dest_files=[ "res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex" ]
-dest_md5="b9d54db62e508ef8f93f5ead878c8adc"
+dest_files=[ "res://.import/knife.png-fca7fe1d1fba59f8a59674063f70d916.stex" ]
+dest_md5="41053fef0d50ef7c35d0f662dcfdf019"
 
 [params]
 

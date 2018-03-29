@@ -13,7 +13,8 @@ var power = 50
 func _ready():
 	cost *= multiplier
 	power *= multiplier
-	scale *= multiplier
+	if scale * multiplier < Vector2(10,10):
+		scale *= multiplier
 
 func _process(delta):
 	position += direction * speed * delta

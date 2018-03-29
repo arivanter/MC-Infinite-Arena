@@ -17,9 +17,9 @@ var health
 var mana
 var stamina
 var mana_regen = 15.0 
-var mana_depletion = .2
-var health_regen = .1 
-var stam_regen = .2 
+var mana_depletion = .4
+var health_regen = .2 
+var stam_regen = .5
 var sword_power = 20.0 
 var spell_mul = 1.0 
 var can_move
@@ -400,7 +400,7 @@ func die():
 
 func inc_pow(stat,multiplier):
 	
-	if stat == 0:
+	if stat == 0 and WALK_SPEED * multiplier < 1500:
 		WALK_SPEED *= multiplier
 	elif stat == 1:
 		max_health *= multiplier
@@ -427,7 +427,8 @@ func inc_pow(stat,multiplier):
 
 
 func absol_power_application():
-	WALK_SPEED *= absol_mul
+	if WALK_SPEED * absol_mul < 1500:
+		WALK_SPEED *= absol_mul
 	EVADE_SPEED *= absol_mul
 	max_health *= absol_mul
 	max_mana *= absol_mul

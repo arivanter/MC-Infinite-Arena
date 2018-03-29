@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex"
+path="res://.import/lizard_bck.png-226c5a92855962f0cd9eee70a371bbcc.stex"
 
 [deps]
 
-source_file="res://particles/spark_particle2.png"
-source_md5="907b52c0c7e2668357863bd01721e813"
+source_file="res://textures/enemies/lizard/lizard_bck.png"
+source_md5="1d6f6f881f294cf3a94b682fcf183178"
 
-dest_files=[ "res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex" ]
-dest_md5="b9d54db62e508ef8f93f5ead878c8adc"
+dest_files=[ "res://.import/lizard_bck.png-226c5a92855962f0cd9eee70a371bbcc.stex" ]
+dest_md5="c5694275230b67125eacdd46d6bc62f9"
 
 [params]
 

@@ -35,7 +35,7 @@ func start_wave():
 	
 	wave_display()
 	
-	enemies = randi()%10+1
+	enemies = randi()%15+1
 	if enemies < 3:
 		enemies += 3
 		
@@ -56,14 +56,12 @@ func start_wave():
 	
 	
 func generate_random_enemy():
-#	var type = randi()%3
-	var type = 0
+	var type = randi()%3
 	var enemy = enemy_types[type].instance()
 	enemy.scale = Vector2(.2,.2)
 	$Path2D/PathFollow2D.unit_offset = rand_range(0,1)
-	# spawn between (100,100) and (5120,3175)
 	enemy.position = $Path2D/PathFollow2D.position
-	enemy.multiplier += float(float(wave)/5)
+	enemy.multiplier += float(float(wave)/5)*2
 	enemy.connect('dead', self, '_on_enemy_dead')
 	add_child(enemy)
 	

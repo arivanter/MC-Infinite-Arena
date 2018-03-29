@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex"
+path="res://.import/kalavaso_dead.png-f24cc2114c21841ca8fbbb8ba579dd7e.stex"
 
 [deps]
 
-source_file="res://particles/spark_particle2.png"
-source_md5="907b52c0c7e2668357863bd01721e813"
+source_file="res://textures/enemies/pumking/kalavaso_dead.png"
+source_md5="f1059153615be6db758caae8c907841e"
 
-dest_files=[ "res://.import/spark_particle2.png-e89f05a4ac3aca1f05e50b101679c190.stex" ]
-dest_md5="b9d54db62e508ef8f93f5ead878c8adc"
+dest_files=[ "res://.import/kalavaso_dead.png-f24cc2114c21841ca8fbbb8ba579dd7e.stex" ]
+dest_md5="b16679f0d7546efe78e7a93cd52e01f0"
 
 [params]
 
