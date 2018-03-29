@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Node2D
 
 var topscore = global.max_wave
 
@@ -13,7 +13,7 @@ func _ready():
 
 func _on_Back_pressed():
 	global.save_game()
-	get_tree().change_scene("res://scenes/MainMenu.tscn")
+	hide()
 
 
 func _on_Reset_pressed():

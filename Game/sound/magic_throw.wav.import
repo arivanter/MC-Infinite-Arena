@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/magic_throw.wav-247287283058627bc78fc021be199118.sample"
+
+[deps]
+
+source_file="res://sound/magic_throw.wav"
+source_md5="1337ed20462dc2179be24d82c7f2a78a"
+
+dest_files=[ "res://.import/magic_throw.wav-247287283058627bc78fc021be199118.sample" ]
+dest_md5="770d80574a0abec0ba86aec33efa8715"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

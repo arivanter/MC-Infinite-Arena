@@ -119,9 +119,13 @@ func select_random_dir():
 
 func attack():
 	if player in $AttackArea.get_overlapping_bodies():
+		$AudioStreamPlayer2D.stream = load("res://sound/pumking_punch.wav")
+		$AudioStreamPlayer2D.play()
 		player.hit(power)
 		animate_atk()
 	else:
+		$AudioStreamPlayer2D.stream = load("res://sound/sword.wav")
+		$AudioStreamPlayer2D.play()
 		$Particles2D.emitting = false
 		$Particles2D.emitting = true
 		player.hit(ranged_pow)

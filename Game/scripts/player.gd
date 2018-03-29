@@ -232,6 +232,8 @@ func attack():
 	
 	if can_move:
 		attack_animation()
+		$AudioStreamPlayer2D.stream = load("res://sound/sword.wav")
+		$AudioStreamPlayer2D.play()
 		attack_area.disabled = false
 		can_move = false
 		var t = Timer.new()
@@ -248,6 +250,8 @@ func attack():
 		
 func _on_Attack_area_body_entered(body):
 	if body != self and body is KinematicBody2D:
+		$AudioStreamPlayer2D.stream = load("res://sound/sword_impact.wav")
+		$AudioStreamPlayer2D.play()
 		body.hit(sword_power)
 		$Camera2D.shake(.1,100,10)
 		if mana < max_mana:

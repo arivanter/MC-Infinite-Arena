@@ -11,6 +11,8 @@ var power = 50
 
 
 func _ready():
+	$AudioStreamPlayer2D.stream = load("res://sound/magic_throw.wav")
+	$AudioStreamPlayer2D.play()
 	cost *= multiplier
 	power *= multiplier
 	if scale * multiplier < Vector2(10,10):
@@ -31,6 +33,8 @@ func _on_Fire1_body_entered( body ):
 	set_process(false)
 	if body is KinematicBody2D:
 		body.hit(power)
+	$AudioStreamPlayer2D.stream = load("res://sound/explosion.wav")
+	$AudioStreamPlayer2D.play()
 	$CollisionShape2D.queue_free()
 	$particles/Sprite.hide()
 	$particles.emitting = false

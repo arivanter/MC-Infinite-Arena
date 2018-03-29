@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/lizard_ray.wav-7084010c34676cde89b3ef0476ec3978.sample"
+
+[deps]
+
+source_file="res://sound/lizard_ray.wav"
+source_md5="59ddbe074fddbda00a29e802116ca8e3"
+
+dest_files=[ "res://.import/lizard_ray.wav-7084010c34676cde89b3ef0476ec3978.sample" ]
+dest_md5="66756e8c1e4c4054b217c6f7f5ecc4e4"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

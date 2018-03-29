@@ -3,7 +3,7 @@ extends Node2D
 var topscore = 100
 
 func _ready():
-	randomize()
+	$AudioStreamPlayer.play()
 	$AnimationPlayer.play("fadein")
 	global.max_wave = global.load_game()
 	global.wave = 1
@@ -25,7 +25,7 @@ func _on_PlayButton_pressed():
 
 
 func _on_SettingsButton_pressed():
-	get_tree().change_scene("res://scenes/settings.tscn")
+	$settings.show()
 	
 	
 	

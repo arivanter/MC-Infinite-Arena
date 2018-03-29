@@ -33,7 +33,7 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 5577.58, 1650.36, 0, 0, 0, 0, 4361.42, 1732.05, 0, 0, 0, 0, 4270.66, 1223.8, 0, 0, 0, 0, 2519.02, 1214.72, 0, 0, 0, 0, 2464.57, 1604.99, 0, 0, 0, 0, 1094.12, 1677.59, 0, 0, 0, 0, 948.904, 824.463, 0, 0, 0, 0, 1493.45, 652.022, 0, 0, 0, 0, 1475.3, -128.5, 0, 0, 0, 0, 948.904, -264.638, 0, 0, 0, 0, 895.51, -1260.46, 0, 0, 0, 0, 3146.2, -1223.52, 0, 0, 0, 0, 3195.11, -489.924, 0, 0, 0, 0, 3890.67, -430.149, 0, 0, 0, 0, 3961.31, -1212.65, 0, 0, 0, 0, 5740.19, -1179.77, 0, 0, 0, 0, 5669.8, -777.519, 0, 0, 0, 0, 5116.7, -737.294, 0, 0, 0, 0, 5036.25, 378.959, 0, 0, 0, 0, 5659.74, 429.241, 0, 0, 0, 0, 5577.58, 1650.36 )
 }
 
-[node name="GameMaster" type="Node2D" index="0"]
+[node name="GameMaster" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform", "Visibility" ]
@@ -95,6 +95,14 @@ cubic_interp = true
 loop = true
 lookahead = 4.0
 _sections_unfolded = [ "Transform" ]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." index="4"]
+
+stream = null
+volume_db = 0.0
+autoplay = false
+mix_target = 0
+bus = "bg_music"
 
 [connection signal="dead" from="player" to="." method="_on_player_dead"]
 

@@ -1,0 +1,18 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/wave_bg_back-in-town.ogg-0fe101b42ad173b8593083c1a7cdf36c.oggstr"
+
+[deps]
+
+source_file="res://sound/wave_bg_back-in-town.ogg"
+source_md5="4b595db4f69a26b988b87f3cd669b0c7"
+
+dest_files=[ "res://.import/wave_bg_back-in-town.ogg-0fe101b42ad173b8593083c1a7cdf36c.oggstr" ]
+dest_md5="61d91c005c2cee7cd0b4c348935fd2e5"
+
+[params]
+
+loop=true
+loop_offset=0

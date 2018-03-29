@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/pumking_punch.wav-687930fc32a9186190bc77907f62c90b.sample"
+
+[deps]
+
+source_file="res://sound/pumking_punch.wav"
+source_md5="26bdc988a72eae318fac931ea0483f54"
+
+dest_files=[ "res://.import/pumking_punch.wav-687930fc32a9186190bc77907f62c90b.sample" ]
+dest_md5="659f87e184c2a447abc1dcc5f551e21c"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

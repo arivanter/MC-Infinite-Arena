@@ -760,6 +760,16 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Textures", "Time" ]
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="8"]
+
+stream = null
+volume_db = 0.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
 
 [connection signal="body_exited" from="AttackArea" to="." method="_on_AttackArea_body_exited"]

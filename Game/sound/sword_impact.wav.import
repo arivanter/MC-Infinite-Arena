@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sword_impact.wav-f90834f6333449e6edbb83cf08bada09.sample"
+
+[deps]
+
+source_file="res://sound/sword_impact.wav"
+source_md5="b0efbcb078e87454e4d4cbe27bdcdc5e"
+
+dest_files=[ "res://.import/sword_impact.wav-f90834f6333449e6edbb83cf08bada09.sample" ]
+dest_md5="5fdff6a1623412fdef8de63c63a7a6ce"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -60,8 +60,9 @@ func _physics_process(delta):
 	
 	$Health.value = health
 	
-	
-	
+	if $Particles2D.emitting == true:
+		$AudioStreamPlayer2D.play()
+		
 	if !rand_move:
 		velocity = player.position - position
 		velocity = velocity.normalized() * FOLLOW_SPEED * (-1)

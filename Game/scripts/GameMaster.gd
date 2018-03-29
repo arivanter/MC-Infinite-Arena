@@ -6,8 +6,18 @@ var enemy_scenes = ["res://scenes/enemy1.tscn", "res://scenes/enemy2.tscn", "res
 var enemy_types = []
 var wave = global.wave
 
+# sound vars
+
+var gathering
+var interlude
+
 func _ready():
 	randomize()
+	
+	gathering = load("res://sound/wave_bg_back-in-town.ogg")
+	interlude = load("res://sound/05 Rise (Interlude).ogg")
+	
+	
 	if wave > 1:
 		for i in range(wave):
 			$player/EndWave.random_bonus()
@@ -32,6 +42,9 @@ func _process(delta):
 	
 
 func start_wave():
+	
+	$AudioStreamPlayer2D.stream = gathering
+	$AudioStreamPlayer2D.play()
 	
 	wave_display()
 	
@@ -77,6 +90,8 @@ func wave_display():
 
 
 func _on_player_dead():
+	$AudioStreamPlayer2D.stream = load("res://sound/game_over.ogg")
+	$AudioStreamPlayer2D.play()
 	get_tree().paused = true
 	if global.max_wave != null:
 		if wave > global.max_wave:
@@ -96,6 +111,8 @@ func _on_enemy_dead():
 		
 		
 func end_wave():
+	$AudioStreamPlayer2D.stream = interlude
+	$AudioStreamPlayer2D.play(13)
 	$player/EndWave/secret_prize.hide()
 	$player/EndWave.show()
 	wave += 1

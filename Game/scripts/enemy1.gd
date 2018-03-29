@@ -45,7 +45,7 @@ func _ready():
 	
 	atk_timer = Timer.new()
 	atk_timer.set_one_shot(true)
-	atk_timer.wait_time = .3
+	atk_timer.wait_time = .5
 	atk_timer.connect("timeout", self, "attack")
 	add_child(atk_timer)
 	
@@ -110,6 +110,7 @@ func select_random_dir():
 func attack():
 	player.hit(power)
 	$Particles2D.emitting = true
+	$AudioStreamPlayer2D.play()
 	atk_timer.start()
 	
 	
