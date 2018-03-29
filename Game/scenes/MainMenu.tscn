@@ -60,7 +60,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="MainMenu" type="Node2D"]
+[node name="MainMenu" type="Node2D" index="0"]
 
 position = Vector2( 1, 0 )
 script = ExtResource( 1 )
@@ -121,7 +121,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Opciones"
+text = "Opciones y Controles"
 flat = false
 align = 1
 _sections_unfolded = [ "custom_fonts" ]
