@@ -91,6 +91,7 @@ func wave_display():
 
 
 func _on_player_dead():
+	$player/EndWave.hide()
 	$AudioStreamPlayer2D.stream = load("res://sound/game_over.ogg")
 	$AudioStreamPlayer2D.play()
 	get_tree().paused = true

@@ -35,6 +35,7 @@ func _on_Fire1_body_entered( body ):
 		body.hit(power)
 	$AudioStreamPlayer2D.stream = load("res://sound/explosion.wav")
 	$AudioStreamPlayer2D.play()
+	Input.start_joy_vibration(0,1,0,.5)
 	$CollisionShape2D.queue_free()
 	$particles/Sprite.hide()
 	$particles.emitting = false

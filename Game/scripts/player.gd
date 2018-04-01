@@ -32,6 +32,7 @@ var var_names = ["Velocidad", "HP", "Mana", "Regeneracion de mana", "Agotamiento
 
 onready var anim = $Sprite/AnimationPlayer
 onready var attack_area = $Attack_area/CollisionShape2D
+onready var heal_stream = load("res://sound/heal.wav")
 
 # state machine variables
 
@@ -43,7 +44,6 @@ var aux_anim_name = ""
 # magic variable node
 
 var spell_scene = load("res://scenes/spells/Fire1.tscn")
-var spell = spell_scene.instance()
 
 
 
@@ -56,7 +56,6 @@ func _ready():
 	$AttackParticles.emitting = false
 	$HealthParticles.emitting = false
 	$Attack_area/CollisionShape2D.disabled = true
-	spell.connect("hit",self,"_on_spell_hit")
 	
 	evade_timer = Timer.new()
 	evade_timer.set_one_shot(true)
@@ -65,6 +64,7 @@ func _ready():
 	add_child(evade_timer)
 	
 	# set initial idle position
+	aux_anim_name = "walk_front"
 	anim.current_animation = "walk_front"
 	anim.stop()
 
@@ -156,6 +156,8 @@ func _change_state(new_state):
 		MAGIC:
 			magic_spell()
 		HEAL:
+			if $AudioStreamPlayer2D.stream != heal_stream :
+				$AudioStreamPlayer2D.stream = heal_stream
 			heal()
 		DIE:
 			die()
@@ -252,6 +254,7 @@ func _on_Attack_area_body_entered(body):
 	if body != self and body is KinematicBody2D:
 		$AudioStreamPlayer2D.stream = load("res://sound/sword_impact.wav")
 		$AudioStreamPlayer2D.play()
+		Input.start_joy_vibration(0,1,0,.5)
 		body.hit(sword_power)
 		$Camera2D.shake(.1,100,10)
 		if mana < max_mana:
@@ -287,6 +290,10 @@ func attack_animation():
 func magic_spell():
 	
 	if can_move and mana > 0:
+		
+		var spell = spell_scene.instance()
+		spell.connect("hit",self,"_on_spell_hit")
+		
 		if aux_anim_name == "walk_back":
 			spell.direction = Vector2 (0,-1)
 			anim.play("atk_back")
@@ -308,8 +315,6 @@ func magic_spell():
 		add_child(spell)
 		
 		# new instance to launch spell again
-		spell = spell_scene.instance()
-		spell.connect("hit",self,"_on_spell_hit")
 
 
 
@@ -322,7 +327,7 @@ func _on_spell_hit():
 #### health management ####
 
 func hit(amount):
-	
+	Input.start_joy_vibration(0,1,1,.5)
 	$Camera2D.shake(.2,50,30)
 	health -= amount
 	if health <= 0:
@@ -360,12 +365,16 @@ func heal():
 		$HealthParticles.emitting = true
 		if anim.current_animation != "heal":
 			anim.play("heal")
-			
+		
+		if not $AudioStreamPlayer2D.playing:
+			$AudioStreamPlayer2D.play()
+		
 		# heal speed and ratio
 		health += health_regen
 		mana -= mana_depletion
 	else:
 		$HealthParticles.emitting = false
+		$AudioStreamPlayer2D.stop()
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)
 		current_state = WALK
@@ -376,6 +385,7 @@ func _input(event):
 	
 	if event.is_action_released("ui_heal"):
 		$HealthParticles.emitting = false
+		$AudioStreamPlayer2D.stop()
 		can_move = true
 		anim.current_animation = "walk_front"
 		anim.seek(0.0, true)

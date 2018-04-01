@@ -21,12 +21,12 @@ extents = Vector2( 354.125, 449.992 )
 [sub_resource type="CircleShape2D" id=2]
 
 custom_solver_bias = 0.0
-radius = 1122.18
+radius = 797.131
 
 [sub_resource type="CircleShape2D" id=3]
 
 custom_solver_bias = 0.0
-radius = 1643.96
+radius = 1355.37
 
 [sub_resource type="StyleBoxFlat" id=4]
 
@@ -610,7 +610,7 @@ anim_offset_random = 0.0
 anim_loop = false
 _sections_unfolded = [ "Color", "Emission Shape", "Flags", "Gravity", "Initial Velocity", "Scale", "Spread" ]
 
-[node name="enemy2" type="KinematicBody2D"]
+[node name="enemy2" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -725,7 +725,7 @@ blend_times = [  ]
 
 emitting = true
 amount = 200
-lifetime = 1.7
+lifetime = 1.0
 one_shot = false
 preprocess = 0.0
 speed_scale = 10.0
