@@ -15,7 +15,7 @@ func _ready():
 	$AudioStreamPlayer2D.play()
 	cost *= multiplier
 	power *= multiplier
-	if scale * multiplier < Vector2(10,10):
+	if scale * multiplier < Vector2(50,50):
 		scale *= multiplier
 
 func _process(delta):

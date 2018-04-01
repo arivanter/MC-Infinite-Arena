@@ -75,7 +75,9 @@ func generate_random_enemy():
 	enemy.scale = Vector2(.2,.2)
 	$Path2D/PathFollow2D.unit_offset = rand_range(0,1)
 	enemy.position = $Path2D/PathFollow2D.position
-	enemy.multiplier += float(float(wave)/5)*2
+	
+	enemy.multiplier += float(float(wave)/5)*3
+	
 	enemy.connect('dead', self, '_on_enemy_dead')
 	add_child(enemy)
 	

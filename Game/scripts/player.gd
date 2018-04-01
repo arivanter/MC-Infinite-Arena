@@ -310,9 +310,10 @@ func magic_spell():
 			spell.direction = Vector2 (1,0)
 			anim.play("atk_right")
 		
-		mana -= spell.cost
+		
 		spell.multiplier = spell_mul
 		add_child(spell)
+		mana -= spell.cost
 		
 		# new instance to launch spell again
 
