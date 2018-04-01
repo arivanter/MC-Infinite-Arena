@@ -38,7 +38,8 @@ func _ready():
 
 func _process(delta):
 	$player/HUD/CurrRemEnemies.text = str(remaining_enemies) + ' / ' + str(enemies)
-	
+	if not $AudioStreamPlayer2D.playing :
+		$AudioStreamPlayer2D.play()
 	
 
 func start_wave():
